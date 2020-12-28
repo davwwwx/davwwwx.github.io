@@ -3,14 +3,29 @@
         <title>&#34;&gt;&lt;img/src=&#34;https://blog.xss.am/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</title>
         <link>https://blog.xss.am/</link>
         <description>Cyber Insecurity blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Tue, 15 Sep 2020 01:00:00 &#43;0400</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 27 Dec 2020 01:00:00 &#43;0400</lastBuildDate>
             <atom:link href="https://blog.xss.am/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Web is hard, reARMSEC aka ARMSec 2020</title>
+    <link>https://blog.xss.am/2020/12/armsec-2020/</link>
+    <pubDate>Sun, 27 Dec 2020 01:00:00 &#43;0400</pubDate>
+    <author>Author</author>
+    <guid>https://blog.xss.am/2020/12/armsec-2020/</guid>
+    <description><![CDATA[<p>At this year&rsquo;s Armsec seventh annual information security conference - <a href="https://armsec.org" target="_blank" rel="noopener noreffer">reARMSEC</a>, I made a small presentation (<a href="https://go.xss.am/armsec2020" target="_blank" rel="noopener noreffer">Google slides</a>, <a href="https://go.xss.am/armsec2020.pdf" target="_blank" rel="noopener noreffer">PDF version</a>) on why the modern web is hard describing <a href="https://www.hackerone.com/top-ten-vulnerabilities" target="_blank" rel="noopener noreffer">HackerOne&rsquo;s top 10</a> most impactful and rewarded vulnerability types for 2020. As for the real-life examples of the bugs, I gathered reports mostly from <a href="https://hackerone.com/hacktivity" target="_blank" rel="noopener noreffer">HackerOne&rsquo;s Hacktivity</a>.</p>]]></description>
+</item><item>
+    <title>Intigriti&#39;s December XSS Challenge Writeup</title>
+    <link>https://blog.xss.am/2020/12/intigriti-december-xss-challenge/</link>
+    <pubDate>Mon, 14 Dec 2020 01:00:00 &#43;0400</pubDate>
+    <author>Author</author>
+    <guid>https://blog.xss.am/2020/12/intigriti-december-xss-challenge/</guid>
+    <description><![CDATA[<p>This month’s Intigriti’s XSS challenge was interesting as a couple of hours after <a href="https://twitter.com/fransrosen" target="_blank" rel="noopener noreffer">Frans Rosén</a> submitted an unintended solution, and I got interested in that one more than in the original.</p>]]></description>
+</item><item>
     <title>What is this blog about</title>
     <link>https://blog.xss.am/2020/09/what-is-this-blog-about/</link>
     <pubDate>Tue, 15 Sep 2020 01:00:00 &#43;0400</pubDate>
     <author>Author</author>
     <guid>https://blog.xss.am/2020/09/what-is-this-blog-about/</guid>
-    <description><![CDATA[<p>Hi there, and welcome to my blog.</p>]]></description>
+    <description><![CDATA[<p>Hi, I am a web application developer and cybersecurity enthusiast from Armenia.
+On this blog, I am going to post mainly Bug bounty and CTF writeups, reconnaissance techniques, approaches to pentesting and my thoughts on general infosec.</p>]]></description>
 </item></channel>
 </rss>
