@@ -91,7 +91,7 @@ if (urlParams.has("autosubmit")) {
 It is a common behavior for web apps to reflect an input's name or id if provided via request body or query string, so does this app (escaping, unfortunately).
 ![Escaped reflected parameter](escapedrefparam.png "Escaped reflected parameter")
 
-But if we try a Unicode sequence (բարև), we can see it doesn't get processed normally.
+But if we try a Unicode sequence (`բարև`), we can see it doesn't get processed normally.
 ![Unicode reflected parameter](unicoderefparam.png "Unicode reflected parameter")
 
 The first part of a Unicode character byte pair gets rendered and the second pair is getting reflected as is,
@@ -99,7 +99,7 @@ for example, in the case of letter `բ` (**U+0562**), **05** gets rendered and *
 
 ### Issue 2 - DOM clobbering as a source to the dangerous sink
 
-Now we can escape the reflection point with a doublequote using some character like `∀` (**U+2200**), but we cannot use event handlers because of CSP nor can construct an inline script element as we cannot guess a server-generated nonce value.
+Now we can escape the reflection point with a doublequote using some character like `∀` (**U+2200**), but we cannot use event handlers because of **CSP** nor can construct an inline `script` element as we cannot guess a server-generated nonce value.
 ```CSP
 script-src 'strict-dynamic' 'nonce-iR/JMMPv7suDLRND7rsPGvDzJxU=' 'unsafe-eval' http: https:;object-src 'none';base-uri 'none';
 ```
