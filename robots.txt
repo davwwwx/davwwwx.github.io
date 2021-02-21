@@ -3,8 +3,6 @@ User-agent: *
 Disallow: /images/
 Disallow: /js/
 Disallow: /css/
-Disallow: /icons/
-Disallow: /index.json
 
 User-agent: MJ12bot
 Disallow: /

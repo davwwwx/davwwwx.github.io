@@ -1,9 +1,9 @@
 {
 	"version": 3,
 	"file": "style.min.css",
-	"sourceRoot": "/home/davit/Projects/blog/LoveIt/exampleSite",
+	"sourceRoot": "/home/davwwwx/projects/blog/LoveIt/exampleSite",
 	"sources": [
-		"/home/davit/Projects/blog/LoveIt/assets/css/style.scss",
+		"/home/davwwwx/projects/blog/LoveIt/assets/css/style.scss",
 		"../assets/css/_variables.scss",
 		"assets/css/_override.scss",
 		"../assets/css/_mixin/_index.scss",

