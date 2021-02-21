@@ -2,21 +2,21 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://blog.xss.am/2021/02/intigriti-february-xss-challenge/</loc><lastmod>2021-02-21T16:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.xss.am/2021/02/intigriti-february-xss-challenge/</loc><lastmod>2021-02-22T00:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://blog.xss.am/2020/12/armsec-2020/</loc><lastmod>2020-12-27T01:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.xss.am/2020/12/intigriti-december-xss-challenge/</loc><lastmod>2020-12-14T01:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.xss.am/2020/09/what-is-this-blog-about/</loc><lastmod>2020-09-15T01:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://blog.xss.am/</loc><lastmod>2021-02-21T16:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.xss.am/categories/</loc><lastmod>2021-02-21T16:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.xss.am/tags/challenge/</loc><lastmod>2021-02-21T16:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.xss.am/categories/challenges/</loc><lastmod>2021-02-21T16:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.xss.am/tags/dom-clobbering/</loc><lastmod>2021-02-21T16:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.xss.am/tags/eval/</loc><lastmod>2021-02-21T16:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.xss.am/tags/intigriti/</loc><lastmod>2021-02-21T16:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.xss.am/posts/</loc><lastmod>2021-02-21T16:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.xss.am/tags/</loc><lastmod>2021-02-21T16:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.xss.am/tags/unicode/</loc><lastmod>2021-02-21T16:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://blog.xss.am/tags/xss/</loc><lastmod>2021-02-21T16:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.xss.am/</loc><lastmod>2021-02-22T00:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.xss.am/categories/</loc><lastmod>2021-02-22T00:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.xss.am/tags/challenge/</loc><lastmod>2021-02-22T00:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.xss.am/categories/challenges/</loc><lastmod>2021-02-22T00:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.xss.am/tags/dom-clobbering/</loc><lastmod>2021-02-22T00:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.xss.am/tags/eval/</loc><lastmod>2021-02-22T00:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.xss.am/tags/intigriti/</loc><lastmod>2021-02-22T00:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.xss.am/posts/</loc><lastmod>2021-02-22T00:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.xss.am/tags/</loc><lastmod>2021-02-22T00:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.xss.am/tags/unicode/</loc><lastmod>2021-02-22T00:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://blog.xss.am/tags/xss/</loc><lastmod>2021-02-22T00:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://blog.xss.am/tags/bug-bounties/</loc><lastmod>2020-12-27T01:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.xss.am/categories/conferences/</loc><lastmod>2020-12-27T01:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://blog.xss.am/tags/conferences/</loc><lastmod>2020-12-27T01:00:00&#43;04:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
