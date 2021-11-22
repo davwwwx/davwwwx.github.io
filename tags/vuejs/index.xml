@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>vuejs - Tag - &#34;&gt;&lt;img/src=&#34;https://blog.xss.am/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</title>
+        <link>https://blog.xss.am/tags/vuejs/</link>
+        <description>vuejs - Tag - &#34;&gt;&lt;img/src=&#34;https://blog.xss.am/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 22 Nov 2021 01:00:00 &#43;0400</lastBuildDate><atom:link href="https://blog.xss.am/tags/vuejs/" rel="self" type="application/rss+xml" /><item>
+    <title>From Intigriti challenge to a Vue.js script gadget</title>
+    <link>https://blog.xss.am/2021/11/vuejs-script-gadget-intigriti/</link>
+    <pubDate>Mon, 22 Nov 2021 01:00:00 &#43;0400</pubDate>
+    <author>Author</author>
+    <guid>https://blog.xss.am/2021/11/vuejs-script-gadget-intigriti/</guid>
+    <description><![CDATA[<p>Intigiriti&rsquo;s November <a href="https://challenge-1121.intigriti.io/" target="_blank" rel="noopener noreffer">challenge</a> by <a href="https://twitter.com/IvarsVids" target="_blank" rel="noopener noreffer">IvarsVids</a> was about a <a href="https://vuejs.org/" target="_blank" rel="noopener noreffer">Vue.js</a> one-pager that reflected user input with some replacements. After visiting the challenge homepage at <a href="https://challenge-1121.intigriti.io/" target="_blank" rel="noopener noreffer">https://challenge-1121.intigriti.io/</a> we quickly notice it reflects <code>s</code> query parameter not escaping HTML less than and greater than signs resulting in <a href="https://challenge-1121.intigriti.io/challenge/index.php?s=reflectme%3C/title%3E%3Cscript%3Ealert%28%29%3C/script%3E" target="_blank" rel="noopener noreffer">HTML injection</a>.</p>]]></description>
+</item></channel>
+</rss>
