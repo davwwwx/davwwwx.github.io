@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>xxe - Tag - &#34;&gt;&lt;img/src=&#34;https://blog.xss.am/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</title>
+        <link>https://blog.xss.am/tags/xxe/</link>
+        <description>xxe - Tag - &#34;&gt;&lt;img/src=&#34;https://blog.xss.am/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 28 Nov 2021 01:00:00 &#43;0400</lastBuildDate><atom:link href="https://blog.xss.am/tags/xxe/" rel="self" type="application/rss+xml" /><item>
+    <title>OrangeSite - &#34;1 CAT COMPANY CTF&#34; spring xxe challenge</title>
+    <link>https://blog.xss.am/2021/11/cyhub-off-by-slash-xxe/</link>
+    <pubDate>Sun, 28 Nov 2021 01:00:00 &#43;0400</pubDate>
+    <author>Author</author>
+    <guid>https://blog.xss.am/2021/11/cyhub-off-by-slash-xxe/</guid>
+    <description><![CDATA[<p>On November 27 <a href="https://cyhub.am/" target="_blank" rel="noopener noreffer">Cyhub Armenia</a> organized a very fun local CTF event - <a href="https://2021.ctf.cyhub.am/" target="_blank" rel="noopener noreffer">1 CAT COMPANY CTF</a> and <a href="https://hackerone.com/p0wn4j?type=user" target="_blank" rel="noopener noreffer">Hayk Andriasyan</a> created an <a href="http://orange.2021.ctf.cyhub.am/" target="_blank" rel="noopener noreffer">XXE challenge</a> for it.</p>]]></description>
+</item></channel>
+</rss>
