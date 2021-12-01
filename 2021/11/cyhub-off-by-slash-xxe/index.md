@@ -6,7 +6,7 @@ On November 27 [Cyhub Armenia](https://cyhub.am/) organized a very fun local CTF
 <!--more-->
 
 
-As a task description, we get only the task location:
+As a task description, we get only the website location:
 ![task description](description.png "task description")
 
 Visiting [which](http://orange.2021.ctf.cyhub.am/) we see nothing helpful, so we run our web fuzzer with a generic wordlist and get some interesting endpoints - `/health`, a health service actuator endpoint, `/test` some spring endpoint which throws java error containing script's full path, `/api`, which returns 403 forbidden response.

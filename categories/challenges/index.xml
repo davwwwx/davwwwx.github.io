@@ -4,6 +4,13 @@
         <link>https://blog.xss.am/categories/challenges/</link>
         <description>Challenges - Category - &#34;&gt;&lt;img/src=&#34;https://blog.xss.am/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 28 Nov 2021 01:00:00 &#43;0400</lastBuildDate><atom:link href="https://blog.xss.am/categories/challenges/" rel="self" type="application/rss+xml" /><item>
+    <title>BabyPython - &#34;1 CAT COMPANY CTF&#34; crypto and deserialization challenge</title>
+    <link>https://blog.xss.am/2021/11/cyhub-padding-oracle-pickle/</link>
+    <pubDate>Sun, 28 Nov 2021 01:00:00 &#43;0400</pubDate>
+    <author>Author</author>
+    <guid>https://blog.xss.am/2021/11/cyhub-padding-oracle-pickle/</guid>
+    <description><![CDATA[<p>On the <a href="https://2021.ctf.cyhub.am/" target="_blank" rel="noopener noreffer">1 CAT COMPANY CTF</a> we didn&rsquo;t manage to finalize our solution for the <a href="http://baby.2021.ctf.cyhub.am/" target="_blank" rel="noopener noreffer">BabyPython challenge</a>, created by <a href="https://twitter.com/k3mmio" target="_blank" rel="noopener noreffer">Vahe Karapetyan</a>, but one of our team members - <a href="https://twitter.com/D4RK7ET" target="_blank" rel="noopener noreffer">Varik Matevosyan</a>, solved it anyways after the time was up.</p>]]></description>
+</item><item>
     <title>OrangeSite - &#34;1 CAT COMPANY CTF&#34; spring xxe challenge</title>
     <link>https://blog.xss.am/2021/11/cyhub-off-by-slash-xxe/</link>
     <pubDate>Sun, 28 Nov 2021 01:00:00 &#43;0400</pubDate>
