@@ -3,7 +3,14 @@
         <title>All Posts - &#34;&gt;&lt;img/src=&#34;https://blog.xss.am/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</title>
         <link>https://blog.xss.am/posts/</link>
         <description>All Posts | &#34;&gt;&lt;img/src=&#34;https://blog.xss.am/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 27 Aug 2022 01:00:00 &#43;0400</lastBuildDate><atom:link href="https://blog.xss.am/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 28 Aug 2022 00:00:00 &#43;0400</lastBuildDate><atom:link href="https://blog.xss.am/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Express notes - &#34;OFFZONE&#34; express file upload challenge</title>
+    <link>https://blog.xss.am/2022/08/offzone-express-notes/</link>
+    <pubDate>Sun, 28 Aug 2022 00:00:00 &#43;0400</pubDate>
+    <author>Author</author>
+    <guid>https://blog.xss.am/2022/08/offzone-express-notes/</guid>
+    <description><![CDATA[<p>The next challenge we did with <a href="https://twitter.com/D4RK7ET" target="_blank" rel="noopener noreffer">Varik Matevosyan</a> on <a href="https://offzone.moscow/" target="_blank" rel="noopener noreffer">OFFZONE Moscow</a> CTF was an express.js file upload application - <a href="https://ctf.bi.zone/challenges/28" target="_blank" rel="noopener noreffer">Express Notes</a>.</p>]]></description>
+</item><item>
     <title>Delicious and Point - &#34;OFFZONE&#34; prototype pollution challenge</title>
     <link>https://blog.xss.am/2022/08/offzone-delicious-and-point/</link>
     <pubDate>Sat, 27 Aug 2022 01:00:00 &#43;0400</pubDate>

@@ -19,7 +19,7 @@
 <meta name="application-name" content="/blog.xss.am/">
 <meta name="apple-mobile-web-app-title" content="/blog.xss.am/"><meta name="theme-color" content="#161209"><meta name="msapplication-TileColor" content="#161209"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"><link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-touch-icon.png"><link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#161209"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.xss.am/2022/08/offzone-delicious-and-point/" /><link rel="prev" href="https://blog.xss.am/2021/11/cyhub-padding-oracle-pickle/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.276e0f03323c1a097f41bcf92a0e23bc16079b9e1aae801b101c8fb90aa496875892c3263fbd90b62de11a4f7df38d3d.css" integrity="sha384-J24PAzI8Ggl/Qbz5Kg4jvBYHm54aroAbEByPuQqklodYksMmP72Qti3hGk998409"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"><link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-touch-icon.png"><link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#161209"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.xss.am/2022/08/offzone-delicious-and-point/" /><link rel="prev" href="https://blog.xss.am/2021/11/cyhub-padding-oracle-pickle/" /><link rel="next" href="https://blog.xss.am/2022/08/offzone-express-notes/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.276e0f03323c1a097f41bcf92a0e23bc16079b9e1aae801b101c8fb90aa496875892c3263fbd90b62de11a4f7df38d3d.css" integrity="sha384-J24PAzI8Ggl/Qbz5Kg4jvBYHm54aroAbEByPuQqklodYksMmP72Qti3hGk998409"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -33,7 +33,7 @@
                             "url": "https:\/\/blog.xss.am\/2022\/08\/offzone-delicious-and-point\/featured-image.jpg",
                             "width":  940 ,
                             "height":  471 
-                        }],"genre": "posts","keywords": "nodejs, javascript, jwt, axios, prototype pollution, gadgets","wordcount":  1029 ,
+                        }],"genre": "posts","keywords": "nodejs, javascript, jwt, axios, prototype-pollution, gadgets","wordcount":  1048 ,
         "url": "https:\/\/blog.xss.am\/2022\/08\/offzone-delicious-and-point\/","datePublished": "2022-08-27T01:00:00+04:00","dateModified": "2022-08-27T01:00:00+04:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "davwwwx","logo": "https:\/\/blog.xss.am\/images\/Boo.png"},"author": {
@@ -110,7 +110,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Delicious and Point - &#34;OFFZONE&#34; prototype pollution challenge</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Davwwwx</a></span>&nbsp;<span class="post-category">included in <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="27-08-2022">27-08-2022</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1029 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="27-08-2022">27-08-2022</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1048 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -358,7 +358,7 @@
 <span class="p">})</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>So to get the flag we need to <code>BigMac</code> property of some category to a value greater than 0 (line 23 above).
+</div><p>So to get the flag we need to set <code>BigMac</code> property of some category to a value greater than 0 (line 23 above).
 But there is one problem - the backend server sets <code>BigMac</code> property of the category to 0 if it is set the property exists (line 17 below).</p>
 <p><em>back_server/index.js</em></p>
 <div class="highlight"><div class="chroma">
@@ -572,14 +572,16 @@ But there is one problem - the backend server sets <code>BigMac</code> property 
 </code></pre></td></tr></table>
 </div>
 </div><p>Sending a request to <code>https://delipo.ctfz.one/create_order</code> with the body above results in an error, which most probably indicates that the server failed to verify with jwt key, as it was empty when passed to <code>jwt.verify</code> on line 40.</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="length-error.png"
-        data-srcset="/2022/08/offzone-delicious-and-point/length-error.png, length-error.png 1.5x, /2022/08/offzone-delicious-and-point/length-error.png 2x"
-        data-sizes="auto"
-        alt="/2022/08/offzone-delicious-and-point/length-error.png"
-        title="length error" /></p>
+<p><figure><a class="lightgallery" href="/2022/08/offzone-delicious-and-point/length-error.png" title="length error" data-thumbnail="/2022/08/offzone-delicious-and-point/length-error.png" data-sub-html="<h2>Error thrown on polluted length</h2><p>length error</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="length-error.png"
+            data-srcset="/2022/08/offzone-delicious-and-point/length-error.png, length-error.png 1.5x, /2022/08/offzone-delicious-and-point/length-error.png 2x"
+            data-sizes="auto"
+            alt="/2022/08/offzone-delicious-and-point/length-error.png" />
+    </a><figcaption class="image-caption">Error thrown on polluted length</figcaption>
+    </figure></p>
 <p>Now we need to make axios to send the request to a server controlled by us and respond with our jwt token. <code>baseURL</code> set in line 6 seems to be the best fit, but it is already passed as an option. Disregarding that fact, we tried to pollute <code>baseURL</code> with the following JSON object:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -600,14 +602,16 @@ But there is one problem - the backend server sets <code>BigMac</code> property 
 </code></pre></td></tr></table>
 </div>
 </div><p>And to our surprise, it worked!</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="collab-request.png"
-        data-srcset="/2022/08/offzone-delicious-and-point/collab-request.png, collab-request.png 1.5x, /2022/08/offzone-delicious-and-point/collab-request.png 2x"
-        data-sizes="auto"
-        alt="/2022/08/offzone-delicious-and-point/collab-request.png"
-        title="collaborator request" /></p>
+<p><figure><a class="lightgallery" href="/2022/08/offzone-delicious-and-point/collab-request.png" title="collaborator request" data-thumbnail="/2022/08/offzone-delicious-and-point/collab-request.png" data-sub-html="<h2>Collaborator request</h2><p>collaborator request</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="collab-request.png"
+            data-srcset="/2022/08/offzone-delicious-and-point/collab-request.png, collab-request.png 1.5x, /2022/08/offzone-delicious-and-point/collab-request.png 2x"
+            data-sizes="auto"
+            alt="/2022/08/offzone-delicious-and-point/collab-request.png" />
+    </a><figcaption class="image-caption">Collaborator request</figcaption>
+    </figure></p>
 <p>But we wanted to know what was the reason for this behavior, and digging into <code>axios</code> codebase we found <code>mergeConfig</code> function which was responsible for that. In <code>lib/core/mergeConfig.js</code> on line 93 (<a href="https://github.com/axios/axios/blob/6acb5ef8ff127db65da85189b3ccaeb10b93121a/lib/core/mergeConfig.js#L93" target="_blank" rel="noopener noreffer">here</a>) we can see that it calls a function using <code>mergeMap</code> map (line 63) for the provided config properties. For <code>baseURL</code> it is <code>defaultToConfig2</code> (defined on line 46) which itself calls <code>getMergedValue</code> (defined on line 18) which effectively merges our polluted <code>baseURL</code> into the passed config.</p>
 <h3 id="exploiting">Exploiting</h3>
 <p>As we previously set the key as and empty string with a polluted <code>length:0</code> property, we can now create a JWT with no signature (e.g. <code>none</code> algorithm). So our server should respond with something like:</p>
@@ -649,19 +653,20 @@ But there is one problem - the backend server sets <code>BigMac</code> property 
                             <a class="link-to-markdown" href="/2022/08/offzone-delicious-and-point/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://blog.xss.am/2022/08/offzone-delicious-and-point/" data-title="Delicious and Point - &#34;OFFZONE&#34; prototype pollution challenge" data-hashtags="nodejs,javascript,jwt,axios,prototype pollution,gadgets"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://blog.xss.am/2022/08/offzone-delicious-and-point/" data-hashtag="nodejs"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://blog.xss.am/2022/08/offzone-delicious-and-point/" data-title="Delicious and Point - &#34;OFFZONE&#34; prototype pollution challenge"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://blog.xss.am/2022/08/offzone-delicious-and-point/"><i class="fab fa-reddit fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://blog.xss.am/2022/08/offzone-delicious-and-point/" data-title="Delicious and Point - &#34;OFFZONE&#34; prototype pollution challenge" data-hashtags="nodejs,javascript,jwt,axios,prototype-pollution,gadgets"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://blog.xss.am/2022/08/offzone-delicious-and-point/" data-hashtag="nodejs"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://blog.xss.am/2022/08/offzone-delicious-and-point/" data-title="Delicious and Point - &#34;OFFZONE&#34; prototype pollution challenge"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://blog.xss.am/2022/08/offzone-delicious-and-point/"><i class="fab fa-reddit fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/nodejs/">nodejs</a>,&nbsp;<a href="/tags/javascript/">javascript</a>,&nbsp;<a href="/tags/jwt/">jwt</a>,&nbsp;<a href="/tags/axios/">axios</a>,&nbsp;<a href="/tags/prototype-pollution/">prototype pollution</a>,&nbsp;<a href="/tags/gadgets/">gadgets</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/nodejs/">nodejs</a>,&nbsp;<a href="/tags/javascript/">javascript</a>,&nbsp;<a href="/tags/jwt/">jwt</a>,&nbsp;<a href="/tags/axios/">axios</a>,&nbsp;<a href="/tags/prototype-pollution/">prototype-pollution</a>,&nbsp;<a href="/tags/gadgets/">gadgets</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2021/11/cyhub-padding-oracle-pickle/" class="prev" rel="prev" title="BabyPython - &#34;1 CAT COMPANY CTF&#34; crypto and deserialization challenge"><i class="fas fa-angle-left fa-fw"></i>BabyPython - &#34;1 CAT COMPANY CTF&#34; crypto and deserialization challenge</a></div>
+    <div class="post-nav"><a href="/2021/11/cyhub-padding-oracle-pickle/" class="prev" rel="prev" title="BabyPython - &#34;1 CAT COMPANY CTF&#34; crypto and deserialization challenge"><i class="fas fa-angle-left fa-fw"></i>BabyPython - &#34;1 CAT COMPANY CTF&#34; crypto and deserialization challenge</a>
+            <a href="/2022/08/offzone-express-notes/" class="next" rel="next" title="Express notes - &#34;OFFZONE&#34; express file upload challenge">Express notes - &#34;OFFZONE&#34; express file upload challenge<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">

