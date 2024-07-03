@@ -6,7 +6,7 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>Intigriti&#39;s December XSS Challenge Writeup - &#34;&gt;&lt;img/src=&#34;/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</title><meta name="Description" content="Cyber Insecurity blog"><meta property="og:title" content="Intigriti&#39;s December XSS Challenge Writeup" />
-<meta property="og:description" content="This month’s Intigriti’s XSS challenge was interesting as a couple of hours after Frans Rosén submitted an unintended solution, and I got interested in that one more than in the original." />
+<meta property="og:description" content="This month’s Intigriti’s XSS challenge was interesting as it was the first time I saw it had unintentded solutions as well." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.xss.am/2020/12/intigriti-december-xss-challenge/" /><meta property="og:image" content="https://blog.xss.am/2020/12/intigriti-december-xss-challenge/featured-image.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-12-14T01:00:00+04:00" />
@@ -15,11 +15,11 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.xss.am/2020/12/intigriti-december-xss-challenge/featured-image.png"/>
 <meta name="twitter:title" content="Intigriti&#39;s December XSS Challenge Writeup"/>
-<meta name="twitter:description" content="This month’s Intigriti’s XSS challenge was interesting as a couple of hours after Frans Rosén submitted an unintended solution, and I got interested in that one more than in the original."/>
+<meta name="twitter:description" content="This month’s Intigriti’s XSS challenge was interesting as it was the first time I saw it had unintentded solutions as well."/>
 <meta name="application-name" content="/blog.xss.am/">
 <meta name="apple-mobile-web-app-title" content="/blog.xss.am/"><meta name="theme-color" content="#161209"><meta name="msapplication-TileColor" content="#161209"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"><link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-touch-icon.png"><link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#161209"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.xss.am/2020/12/intigriti-december-xss-challenge/" /><link rel="prev" href="https://blog.xss.am/2020/09/what-is-this-blog-about/" /><link rel="next" href="https://blog.xss.am/2020/12/armsec-2020/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.276e0f03323c1a097f41bcf92a0e23bc16079b9e1aae801b101c8fb90aa496875892c3263fbd90b62de11a4f7df38d3d.css" integrity="sha384-J24PAzI8Ggl/Qbz5Kg4jvBYHm54aroAbEByPuQqklodYksMmP72Qti3hGk998409"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png"><link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-touch-icon.png"><link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#161209"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.xss.am/2020/12/intigriti-december-xss-challenge/" /><link rel="next" href="https://blog.xss.am/2021/02/intigriti-february-xss-challenge/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.276e0f03323c1a097f41bcf92a0e23bc16079b9e1aae801b101c8fb90aa496875892c3263fbd90b62de11a4f7df38d3d.css" integrity="sha384-J24PAzI8Ggl/Qbz5Kg4jvBYHm54aroAbEByPuQqklodYksMmP72Qti3hGk998409"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -33,7 +33,7 @@
                             "url": "https:\/\/blog.xss.am\/2020\/12\/intigriti-december-xss-challenge\/featured-image.png",
                             "width":  971 ,
                             "height":  218 
-                        }],"genre": "posts","keywords": "challenge, xss, intigriti, eval, unintended","wordcount":  677 ,
+                        }],"genre": "posts","keywords": "challenge, xss, intigriti, eval, unintended","wordcount":  658 ,
         "url": "https:\/\/blog.xss.am\/2020\/12\/intigriti-december-xss-challenge\/","datePublished": "2020-12-14T01:00:00+04:00","dateModified": "2020-12-14T01:00:00+04:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "davwwwx","logo": "https:\/\/blog.xss.am\/images\/Boo.png"},"author": {
@@ -110,7 +110,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Intigriti&#39;s December XSS Challenge Writeup</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Davwwwx</a></span>&nbsp;<span class="post-category">included in <a href="/categories/challenges/"><i class="far fa-folder fa-fw"></i>Challenges</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="14-12-2020">14-12-2020</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;677 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="14-12-2020">14-12-2020</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;658 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -134,17 +134,7 @@
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>This month’s Intigriti’s XSS challenge was interesting as a couple of hours after <a href="https://twitter.com/fransrosen" target="_blank" rel="noopener noreffer">Frans Rosén</a> submitted an unintended solution, and I got interested in that one more than in the original.</p>
-<p><figure><a class="lightgallery" href="/2020/12/intigriti-december-xss-challenge/unintended.png" title="Unintended Solution by Frans Rosen" data-thumbnail="/2020/12/intigriti-december-xss-challenge/unintended.png" data-sub-html="<h2>Unintended Solution</h2><p>Unintended Solution by Frans Rosen</p>">
-        <img
-            class="lazyload"
-            src="/svg/loading.min.svg"
-            data-src="unintended.png"
-            data-srcset="/2020/12/intigriti-december-xss-challenge/unintended.png, unintended.png 1.5x, /2020/12/intigriti-december-xss-challenge/unintended.png 2x"
-            data-sizes="auto"
-            alt="/2020/12/intigriti-december-xss-challenge/unintended.png" />
-    </a><figcaption class="image-caption">Unintended Solution</figcaption>
-    </figure></p>
+            </div><div class="content" id="content"><p>This month’s Intigriti’s XSS challenge was interesting as it was the first time I saw it had unintentded solutions as well.</p>
 <p>Challenge on webarchive <a href="https://web.archive.org/web/20201208103813/https://challenge-1220.intigriti.io/" target="_blank" rel="noopener noreffer">https://web.archive.org/web/20201208103813/https://challenge-1220.intigriti.io/</a>.
 Vulnerable script on webarchive <a href="https://web.archive.org/web/20201210000939/https://challenge-1220.intigriti.io/script.js" target="_blank" rel="noopener noreffer">https://web.archive.org/web/20201210000939/https://challenge-1220.intigriti.io/script.js</a>.</p>
 <h3 id="solution-1">Solution 1</h3>
@@ -410,8 +400,8 @@ Vulnerable script on webarchive <a href="https://web.archive.org/web/20201210000
         </section>
     </div>
 
-    <div class="post-nav"><a href="/2020/09/what-is-this-blog-about/" class="prev" rel="prev" title="What is this blog about"><i class="fas fa-angle-left fa-fw"></i>What is this blog about</a>
-            <a href="/2020/12/armsec-2020/" class="next" rel="next" title="Web is hard, reARMSEC aka ARMSec 2020">Web is hard, reARMSEC aka ARMSec 2020<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav">
+            <a href="/2021/02/intigriti-february-xss-challenge/" class="next" rel="next" title="Intigriti&#39;s February XSS Challenge Writeup">Intigriti&#39;s February XSS Challenge Writeup<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">

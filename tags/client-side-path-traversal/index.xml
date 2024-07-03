@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>client side path traversal - Tag - &#34;&gt;&lt;img/src=&#34;https://blog.xss.am/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</title>
+        <link>https://blog.xss.am/tags/client-side-path-traversal/</link>
+        <description>client side path traversal - Tag - &#34;&gt;&lt;img/src=&#34;https://blog.xss.am/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Wed, 30 Aug 2023 01:00:00 &#43;0400</lastBuildDate><atom:link href="https://blog.xss.am/tags/client-side-path-traversal/" rel="self" type="application/rss+xml" /><item>
+    <title>Leaking Jupyter instance auth token chaining CVE-2023-39968, CVE-2024-22421 and a chromium bug</title>
+    <link>https://blog.xss.am/2023/08/cve-2023-39968-jupyter-token-leak/</link>
+    <pubDate>Wed, 30 Aug 2023 01:00:00 &#43;0400</pubDate>
+    <author>Author</author>
+    <guid>https://blog.xss.am/2023/08/cve-2023-39968-jupyter-token-leak/</guid>
+    <description><![CDATA[<p>After getting an invitation to <a href="https://app.intigriti.com/researcher/programs/jupyter/jupyter/detail" target="_blank" rel="noopener noreffer">Jupyter</a>&rsquo;s private (then public and now not active anymore) program on <a href="https://www.intigriti.com/" target="_blank" rel="noopener noreffer">Intigriti</a> I decided to dig into its codebase. Spending a few hours I found a client side path traversal issue chaining which with an open redirect and a chromium issue, I was able to leak Jupyterlab&rsquo;s authentication and csrf tokens.</p>]]></description>
+</item></channel>
+</rss>

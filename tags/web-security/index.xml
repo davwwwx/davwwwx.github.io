@@ -24,12 +24,5 @@
     <author>Author</author>
     <guid>https://blog.xss.am/2021/11/vuejs-script-gadget-intigriti/</guid>
     <description><![CDATA[<p>Intigiriti&rsquo;s November <a href="https://challenge-1121.intigriti.io/" target="_blank" rel="noopener noreffer">challenge</a> by <a href="https://twitter.com/IvarsVids" target="_blank" rel="noopener noreffer">IvarsVids</a> was about a <a href="https://vuejs.org/" target="_blank" rel="noopener noreffer">Vue.js</a> one-pager that reflected user input with some replacements. After visiting the challenge homepage at <a href="https://challenge-1121.intigriti.io/" target="_blank" rel="noopener noreffer">https://challenge-1121.intigriti.io/</a> we quickly notice it reflects <code>s</code> query parameter not escaping HTML less than and greater than signs resulting in <a href="https://challenge-1121.intigriti.io/challenge/index.php?s=reflectme%3C/title%3E%3Cscript%3Ealert%28%29%3C/script%3E" target="_blank" rel="noopener noreffer">HTML injection</a>.</p>]]></description>
-</item><item>
-    <title>Web is hard, reARMSEC aka ARMSec 2020</title>
-    <link>https://blog.xss.am/2020/12/armsec-2020/</link>
-    <pubDate>Sun, 27 Dec 2020 01:00:00 &#43;0400</pubDate>
-    <author>Author</author>
-    <guid>https://blog.xss.am/2020/12/armsec-2020/</guid>
-    <description><![CDATA[<p>At this year&rsquo;s Armsec seventh annual information security conference - <a href="https://armsec.org" target="_blank" rel="noopener noreffer">reARMSEC</a>, I made a small presentation (<a href="https://go.xss.am/armsec2020" target="_blank" rel="noopener noreffer">Google slides</a>, <a href="https://go.xss.am/armsec2020.pdf" target="_blank" rel="noopener noreffer">PDF version</a>) on why the modern web is hard describing <a href="https://www.hackerone.com/top-ten-vulnerabilities" target="_blank" rel="noopener noreffer">HackerOne&rsquo;s top 10</a> most impactful and rewarded vulnerability types for 2020. As for the real-life examples of the bugs, I gathered reports mostly from <a href="https://hackerone.com/hacktivity" target="_blank" rel="noopener noreffer">HackerOne&rsquo;s Hacktivity</a>.</p>]]></description>
 </item></channel>
 </rss>

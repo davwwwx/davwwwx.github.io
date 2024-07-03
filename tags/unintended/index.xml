@@ -9,6 +9,6 @@
     <pubDate>Mon, 14 Dec 2020 01:00:00 &#43;0400</pubDate>
     <author>Author</author>
     <guid>https://blog.xss.am/2020/12/intigriti-december-xss-challenge/</guid>
-    <description><![CDATA[<p>This month’s Intigriti’s XSS challenge was interesting as a couple of hours after <a href="https://twitter.com/fransrosen" target="_blank" rel="noopener noreffer">Frans Rosén</a> submitted an unintended solution, and I got interested in that one more than in the original.</p>]]></description>
+    <description><![CDATA[<p>This month’s Intigriti’s XSS challenge was interesting as it was the first time I saw it had unintentded solutions as well.</p>]]></description>
 </item></channel>
 </rss>

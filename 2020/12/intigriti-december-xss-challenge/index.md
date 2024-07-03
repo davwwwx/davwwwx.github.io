@@ -1,9 +1,8 @@
 # Intigriti's December XSS Challenge Writeup
 
 
-This month’s Intigriti’s XSS challenge was interesting as a couple of hours after [Frans Rosén](https://twitter.com/fransrosen) submitted an unintended solution, and I got interested in that one more than in the original.
+This month’s Intigriti’s XSS challenge was interesting as it was the first time I saw it had unintentded solutions as well.
 <!--more-->
-![Unintended Solution by Frans Rosen](unintended.png "Unintended Solution")
 
 Challenge on webarchive [https://web.archive.org/web/20201208103813/https://challenge-1220.intigriti.io/](https://web.archive.org/web/20201208103813/https://challenge-1220.intigriti.io/).
 Vulnerable script on webarchive [https://web.archive.org/web/20201210000939/https://challenge-1220.intigriti.io/script.js](https://web.archive.org/web/20201210000939/https://challenge-1220.intigriti.io/script.js).
