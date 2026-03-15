@@ -9,6 +9,6 @@
     <pubDate>Sun, 15 Mar 2026 01:00:00 &#43;0400</pubDate>
     <author>Author</author>
     <guid>https://blog.xss.am/2026/03/how-we-mitmd-a-crypto-exchange-platform/</guid>
-    <description><![CDATA[<p>A friend of mine, <a href="https://x.com/0xdln" target="_blank" rel="noopener noreffer">0xdln</a>, reached out to me with a cache poisoning issue on an OpenID autoconfiguration endpoint - <code>/.well-known/openid-configuration</code>, on a public program on <a href="https://www.bugcrowd.com" target="_blank" rel="noopener noreffer">Bugcrowd</a>, that he was struggling to showcase an impact, so we decided to dig deeper.</p>]]></description>
+    <description><![CDATA[<p>A friend of mine, <a href="https://x.com/0xdln" target="_blank" rel="noopener noreffer">0xdln</a>, reached out to me with a cache poisoning issue on an OpenID autoconfiguration endpoint - <code>/.well-known/openid-configuration</code>, on a public program on <a href="https://www.bugcrowd.com" target="_blank" rel="noopener noreffer">Bugcrowd</a>, with which he was struggling to demonstrate an impact, so we decided to dig deeper.</p>]]></description>
 </item></channel>
 </rss>

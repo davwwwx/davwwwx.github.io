@@ -6,7 +6,7 @@
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
         <title>How we MITM&#39;d a crypto exchange platform via cache poisoning - &#34;&gt;&lt;img/src=&#34;/%ff/&#34;/onerror=alert(/blog.xss.am/)&gt;&#34;&lt;</title><meta name="Description" content="Cyber Insecurity blog"><meta property="og:title" content="How we MITM&#39;d a crypto exchange platform via cache poisoning" />
-<meta property="og:description" content="A friend of mine, 0xdln, reached out to me with a cache poisoning issue on an OpenID autoconfiguration endpoint - /.well-known/openid-configuration, on a public program on Bugcrowd, that he was struggling to showcase an impact, so we decided to dig deeper." />
+<meta property="og:description" content="A friend of mine, 0xdln, reached out to me with a cache poisoning issue on an OpenID autoconfiguration endpoint - /.well-known/openid-configuration, on a public program on Bugcrowd, with which he was struggling to demonstrate an impact, so we decided to dig deeper." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.xss.am/2026/03/how-we-mitmd-a-crypto-exchange-platform/" /><meta property="og:image" content="https://blog.xss.am/2026/03/how-we-mitmd-a-crypto-exchange-platform/featured-image.jpeg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2026-03-15T01:00:00+04:00" />
@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://blog.xss.am/2026/03/how-we-mitmd-a-crypto-exchange-platform/featured-image.jpeg"/>
 <meta name="twitter:title" content="How we MITM&#39;d a crypto exchange platform via cache poisoning"/>
-<meta name="twitter:description" content="A friend of mine, 0xdln, reached out to me with a cache poisoning issue on an OpenID autoconfiguration endpoint - /.well-known/openid-configuration, on a public program on Bugcrowd, that he was struggling to showcase an impact, so we decided to dig deeper."/>
+<meta name="twitter:description" content="A friend of mine, 0xdln, reached out to me with a cache poisoning issue on an OpenID autoconfiguration endpoint - /.well-known/openid-configuration, on a public program on Bugcrowd, with which he was struggling to demonstrate an impact, so we decided to dig deeper."/>
 <meta name="application-name" content="/blog.xss.am/">
 <meta name="apple-mobile-web-app-title" content="/blog.xss.am/"><meta name="theme-color" content="#161209"><meta name="msapplication-TileColor" content="#161209"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
@@ -33,7 +33,7 @@
                             "url": "https:\/\/blog.xss.am\/2026\/03\/how-we-mitmd-a-crypto-exchange-platform\/featured-image.jpeg",
                             "width":  1280 ,
                             "height":  714 
-                        }],"genre": "posts","keywords": "cache poisoning, OAuth2, OpenID, bug bounty","wordcount":  892 ,
+                        }],"genre": "posts","keywords": "cache poisoning, OAuth2, OpenID, bug bounty","wordcount":  894 ,
         "url": "https:\/\/blog.xss.am\/2026\/03\/how-we-mitmd-a-crypto-exchange-platform\/","datePublished": "2026-03-15T01:00:00+04:00","dateModified": "2026-03-15T01:00:00+04:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "davwwwx","logo": "https:\/\/blog.xss.am\/images\/Boo.png"},"author": {
@@ -110,7 +110,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">How we MITM&#39;d a crypto exchange platform via cache poisoning</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Davwwwx</a></span>&nbsp;<span class="post-category">included in <a href="/categories/bug-bounty/"><i class="far fa-folder fa-fw"></i>Bug Bounty</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="15-03-2026">15-03-2026</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;892 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="15-03-2026">15-03-2026</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;894 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -137,7 +137,7 @@
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>A friend of mine, <a href="https://x.com/0xdln" target="_blank" rel="noopener noreffer">0xdln</a>, reached out to me with a cache poisoning issue on an OpenID autoconfiguration endpoint - <code>/.well-known/openid-configuration</code>, on a public program on <a href="https://www.bugcrowd.com" target="_blank" rel="noopener noreffer">Bugcrowd</a>, that he was struggling to showcase an impact, so we decided to dig deeper.</p>
+            </div><div class="content" id="content"><p>A friend of mine, <a href="https://x.com/0xdln" target="_blank" rel="noopener noreffer">0xdln</a>, reached out to me with a cache poisoning issue on an OpenID autoconfiguration endpoint - <code>/.well-known/openid-configuration</code>, on a public program on <a href="https://www.bugcrowd.com" target="_blank" rel="noopener noreffer">Bugcrowd</a>, with which he was struggling to demonstrate an impact, so we decided to dig deeper.</p>
 <h3 id="cache-poisoning">Cache poisoning</h3>
 <p>So the website was using <code>X-Forwarded-Prefix</code> unkeyed header to append the header&rsquo;s value to URLs in <code>/.well-known/openid-configuration</code> openID autoconfiguration endpoint.</p>
 <p><figure><a class="lightgallery" href="/2026/03/how-we-mitmd-a-crypto-exchange-platform/poison.png" title="poisoning" data-thumbnail="/2026/03/how-we-mitmd-a-crypto-exchange-platform/poison.png" data-sub-html="<h2>cache poisoning</h2><p>poisoning</p>">
@@ -150,7 +150,7 @@
             alt="/2026/03/how-we-mitmd-a-crypto-exchange-platform/poison.png" />
     </a><figcaption class="image-caption">cache poisoning</figcaption>
     </figure></p>
-<p>And, it was being cached by Cloudflare, as it was not in the cache key.</p>
+<p>And, it was being cached by Cloudflare, as it was not included in the cache key.</p>
 <p><figure><a class="lightgallery" href="/2026/03/how-we-mitmd-a-crypto-exchange-platform/verify.png" title="verifying" data-thumbnail="/2026/03/how-we-mitmd-a-crypto-exchange-platform/verify.png" data-sub-html="<h2>confirming the poisoned cache</h2><p>verifying</p>">
         <img
             class="lazyload"
@@ -192,7 +192,7 @@
         title="callstack" /></p>
 <p>Now that we had the confidence that it was being used, we decided to create a flow where we could utilize the cache poisoning to steal users' tokens. But before moving forward with MiTMing process, let&rsquo;s see where we can snoop in the OAuth2 flow.</p>
 <h3 id="oauth2-flow">OAuth2 flow</h3>
-<p>The website is utilizing OAuth2 authorization code flow with <a href="https://oauth.net/2/pkce/" target="_blank" rel="noopener noreffer">PKCE</a>. Usually, the authorization code flow looks like the following.</p>
+<p>The website is utilizing OAuth2 authorization code flow with <a href="https://oauth.net/2/pkce/" target="_blank" rel="noopener noreffer">PKCE</a>. Usually, the authorization code flow works as follows.</p>
 <p><figure><a class="lightgallery" href="/2026/03/how-we-mitmd-a-crypto-exchange-platform/acgrant.png" title="authorization code grant" data-thumbnail="/2026/03/how-we-mitmd-a-crypto-exchange-platform/acgrant.png" data-sub-html="<h2>https://blog.postman.com/pkce-oauth-how-to/</h2><p>authorization code grant</p>">
         <img
             class="lazyload"
@@ -222,9 +222,9 @@
             alt="/2026/03/how-we-mitmd-a-crypto-exchange-platform/pkce.png" />
     </a><figcaption class="image-caption">https://blog.postman.com/pkce-oauth-how-to/</figcaption>
     </figure></p>
-<p>As we can see, the client secret is not usually required to exchange the token (for public clients); instead, the client app generates a code verifier and a challenge for it to be later verified when exchanging the code for the token. This means we could sniff the code and exchange the code for an access token ourselves and remain completely invisible to the user.</p>
+<p>As we can see, the client secret is not usually required to exchange the token (for public clients); instead, the client app generates a code verifier and a code challenge derived from it, which the authorization server later uses to verify the token exchange. This means we could sniff the code and exchange the code for an access token ourselves and remain completely invisible to the user.</p>
 <h3 id="mitming-process">MiTMing process</h3>
-<p>We have previously verified that the OpenID configuration endpoint was being fetched and processed by the client application. We have also verified that OAuth2 endpoints like <code>authorization_endpoint</code>, <code>token_endpoint</code>, and <code>userinfo_endpoint</code> were indeed being set by the poisoned configuration file.</p>
+<p>We had previously verified that the OpenID configuration endpoint was being fetched and processed by the client application. We have also verified that OAuth2 endpoints like <code>authorization_endpoint</code>, <code>token_endpoint</code>, and <code>userinfo_endpoint</code> were indeed being set by the poisoned configuration file.</p>
 <p><figure><a class="lightgallery" href="/2026/03/how-we-mitmd-a-crypto-exchange-platform/c_endpoints.png" title="configuration endpoints" data-thumbnail="/2026/03/how-we-mitmd-a-crypto-exchange-platform/c_endpoints.png" data-sub-html="<h2>openid configuration endpoints</h2><p>configuration endpoints</p>">
         <img
             class="lazyload"
@@ -235,9 +235,9 @@
             alt="/2026/03/how-we-mitmd-a-crypto-exchange-platform/c_endpoints.png" />
     </a><figcaption class="image-caption">openid configuration endpoints</figcaption>
     </figure></p>
-<p>Now it was time to create a server, such that:</p>
+<p>Now it was time to create a server that would:</p>
 <ul>
-<li>Would intercept the generated code challenge and state, and move it forward to the real authorization server,</li>
+<li>Intercept the generated code challenge and state, and move it forward to the real authorization server,</li>
 <li>The authorization server would then redirect the user with the code to the client,</li>
 <li>The Client would then try to exchange the code with the server (<code>token_endpoint</code>) that is also set in the poisoned configuration file,</li>
 <li>We would receive the code, exchange the code for a token ourselves, steal the token, but also give the access token back to the user to stay completely invisible.</li>
@@ -362,7 +362,7 @@
     </figure></p>
 <p>Luckily, it did not raise a panic, and we were good to go.</p>
 <h3 id="reporting-and-results">Reporting and results</h3>
-<p>We reported the report through Bugcrowd, and after a month and about 40 comments, we were finally able to get the issue triaged 😅.</p>
+<p>We submitted the report through Bugcrowd, and after a month and about 40 comments, we were finally able to get the issue triaged 😅.</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"

@@ -2,7 +2,7 @@
 
 
 
-A friend of mine, [0xdln](https://x.com/0xdln), reached out to me with a cache poisoning issue on an OpenID autoconfiguration endpoint - `/.well-known/openid-configuration`, on a public program on [Bugcrowd](https://www.bugcrowd.com), that he was struggling to showcase an impact, so we decided to dig deeper.
+A friend of mine, [0xdln](https://x.com/0xdln), reached out to me with a cache poisoning issue on an OpenID autoconfiguration endpoint - `/.well-known/openid-configuration`, on a public program on [Bugcrowd](https://www.bugcrowd.com), with which he was struggling to demonstrate an impact, so we decided to dig deeper.
 <!--more-->
 
 
@@ -12,7 +12,7 @@ So the website was using `X-Forwarded-Prefix` unkeyed header to append the heade
 
 ![poisoning](poison.png "cache poisoning")
 
-And, it was being cached by Cloudflare, as it was not in the cache key.
+And, it was being cached by Cloudflare, as it was not included in the cache key.
 
 ![verifying](verify.png "confirming the poisoned cache")
 
@@ -38,7 +38,7 @@ Now that we had the confidence that it was being used, we decided to create a fl
 ### OAuth2 flow
 
 
-The website is utilizing OAuth2 authorization code flow with [PKCE](https://oauth.net/2/pkce/). Usually, the authorization code flow looks like the following.
+The website is utilizing OAuth2 authorization code flow with [PKCE](https://oauth.net/2/pkce/). Usually, the authorization code flow works as follows.
 
 ![authorization code grant](acgrant.png "https://blog.postman.com/pkce-oauth-how-to/")
 
@@ -54,16 +54,16 @@ Luckily, the client was using PKCE, which looks like the following.
 
 ![authorization code grant](pkce.png "https://blog.postman.com/pkce-oauth-how-to/")
 
-As we can see, the client secret is not usually required to exchange the token (for public clients); instead, the client app generates a code verifier and a challenge for it to be later verified when exchanging the code for the token. This means we could sniff the code and exchange the code for an access token ourselves and remain completely invisible to the user.
+As we can see, the client secret is not usually required to exchange the token (for public clients); instead, the client app generates a code verifier and a code challenge derived from it, which the authorization server later uses to verify the token exchange. This means we could sniff the code and exchange the code for an access token ourselves and remain completely invisible to the user.
 
 ### MiTMing process
 
-We have previously verified that the OpenID configuration endpoint was being fetched and processed by the client application. We have also verified that OAuth2 endpoints like `authorization_endpoint`, `token_endpoint`, and `userinfo_endpoint` were indeed being set by the poisoned configuration file.
+We had previously verified that the OpenID configuration endpoint was being fetched and processed by the client application. We have also verified that OAuth2 endpoints like `authorization_endpoint`, `token_endpoint`, and `userinfo_endpoint` were indeed being set by the poisoned configuration file.
 
 ![configuration endpoints](c_endpoints.png "openid configuration endpoints")
 
-Now it was time to create a server, such that:
-- Would intercept the generated code challenge and state, and move it forward to the real authorization server, 
+Now it was time to create a server that would:
+- Intercept the generated code challenge and state, and move it forward to the real authorization server, 
 - The authorization server would then redirect the user with the code to the client,
 - The Client would then try to exchange the code with the server (`token_endpoint`) that is also set in the poisoned configuration file,
 - We would receive the code, exchange the code for a token ourselves, steal the token, but also give the access token back to the user to stay completely invisible.
@@ -129,7 +129,7 @@ Luckily, it did not raise a panic, and we were good to go.
 
 ### Reporting and results
 
-We reported the report through Bugcrowd, and after a month and about 40 comments, we were finally able to get the issue triaged 😅.
+We submitted the report through Bugcrowd, and after a month and about 40 comments, we were finally able to get the issue triaged 😅.
 
 ![bugcrowd](bugcrowd.png "")
 
