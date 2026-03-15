@@ -54,7 +54,7 @@ Luckily, the client was using PKCE, which looks like the following.
 
 ![authorization code grant](pkce.png "https://blog.postman.com/pkce-oauth-how-to/")
 
-As we can see, the client secret is not usually required to exchange the token (for public clients); instead, the client app generates a code verifier and a challenge for it to be later verified when exchanging the code for the token. This means we could sniff the code and exchange the code for an access token ourselves and be completely transparent.
+As we can see, the client secret is not usually required to exchange the token (for public clients); instead, the client app generates a code verifier and a challenge for it to be later verified when exchanging the code for the token. This means we could sniff the code and exchange the code for an access token ourselves and remain completely invisible to the user.
 
 ### MiTMing process
 
