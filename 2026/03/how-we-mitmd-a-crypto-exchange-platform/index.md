@@ -50,7 +50,7 @@ The website is utilizing OAuth2 authorization code flow with [PKCE](https://oaut
 5. The client application backend makes a POST request to the token endpoint with the authorization code and client credentials.
 6. The Authorization Server validates the code and the credentials. It returns an access token to the application server.
 
-Luckily, the client was using PKCE, which looks like the following.
+Luckily, the client was using PKCE, which works as follows.
 
 ![authorization code grant](pkce.png "https://blog.postman.com/pkce-oauth-how-to/")
 
@@ -58,7 +58,7 @@ As we can see, the client secret is not usually required to exchange the token (
 
 ### MiTMing process
 
-We had previously verified that the OpenID configuration endpoint was being fetched and processed by the client application. We have also verified that OAuth2 endpoints like `authorization_endpoint`, `token_endpoint`, and `userinfo_endpoint` were indeed being set by the poisoned configuration file.
+We have previously verified that the OpenID configuration endpoint was being fetched and processed by the client application. We have also verified that OAuth2 endpoints like `authorization_endpoint`, `token_endpoint`, and `userinfo_endpoint` were indeed being set by the poisoned configuration file.
 
 ![configuration endpoints](c_endpoints.png "openid configuration endpoints")
 
