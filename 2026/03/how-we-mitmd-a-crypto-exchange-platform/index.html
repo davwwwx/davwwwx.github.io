@@ -33,7 +33,7 @@
                             "url": "https:\/\/blog.xss.am\/2026\/03\/how-we-mitmd-a-crypto-exchange-platform\/featured-image.jpeg",
                             "width":  1280 ,
                             "height":  714 
-                        }],"genre": "posts","keywords": "cache poisoning, OAuth2, OpenID, bug bounty","wordcount":  893 ,
+                        }],"genre": "posts","keywords": "cache poisoning, OAuth2, OpenID, bug bounty","wordcount":  909 ,
         "url": "https:\/\/blog.xss.am\/2026\/03\/how-we-mitmd-a-crypto-exchange-platform\/","datePublished": "2026-03-15T01:00:00+04:00","dateModified": "2026-03-15T01:00:00+04:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "davwwwx","logo": "https:\/\/blog.xss.am\/images\/Boo.png"},"author": {
@@ -110,7 +110,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">How we MITM&#39;d a crypto exchange platform via cache poisoning</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/about" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Davwwwx</a></span>&nbsp;<span class="post-category">included in <a href="/categories/bug-bounty/"><i class="far fa-folder fa-fw"></i>Bug Bounty</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="15-03-2026">15-03-2026</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;893 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="15-03-2026">15-03-2026</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;909 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -132,6 +132,7 @@
         <li><a href="#finding-references">Finding references</a></li>
         <li><a href="#oauth2-flow">OAuth2 flow</a></li>
         <li><a href="#mitming-process">MiTMing process</a></li>
+        <li><a href="#tldr">TL;DR</a></li>
         <li><a href="#reporting-and-results">Reporting and results</a></li>
       </ul>
     </li>
@@ -172,7 +173,7 @@
         data-sizes="auto"
         alt="/2026/03/how-we-mitmd-a-crypto-exchange-platform/breakpoint.png"
         title="breakpoint" /></p>
-<p>And, surely so, we saw a request being made to it.</p>
+<p>And, sure enough, we saw a request being made to it.</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -181,7 +182,7 @@
         data-sizes="auto"
         alt="/2026/03/how-we-mitmd-a-crypto-exchange-platform/fetch.png"
         title="fetch" /></p>
-<p>And the callstack lead to <code>onAuthCallback</code> confirming that it is being utilized for exchanging the code.</p>
+<p>And the callstack led to <code>onAuthCallback</code> confirming that it is being utilized for exchanging the code.</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -361,6 +362,18 @@
     </a><figcaption class="image-caption">firefox prompt</figcaption>
     </figure></p>
 <p>Luckily, it did not raise a panic, and we were good to go.</p>
+<h3 id="tldr">TL;DR</h3>
+<p>To summarize the attack flow looked like the following:</p>
+<p><figure><a class="lightgallery" href="/2026/03/how-we-mitmd-a-crypto-exchange-platform/diagram.svg" title="attack flow" data-thumbnail="/2026/03/how-we-mitmd-a-crypto-exchange-platform/diagram.svg" data-sub-html="<h2>attack flow</h2><p>attack flow</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="diagram.svg"
+            data-srcset="/2026/03/how-we-mitmd-a-crypto-exchange-platform/diagram.svg, diagram.svg 1.5x, /2026/03/how-we-mitmd-a-crypto-exchange-platform/diagram.svg 2x"
+            data-sizes="auto"
+            alt="/2026/03/how-we-mitmd-a-crypto-exchange-platform/diagram.svg" />
+    </a><figcaption class="image-caption">attack flow</figcaption>
+    </figure></p>
 <h3 id="reporting-and-results">Reporting and results</h3>
 <p>We submitted the report through Bugcrowd, and after a month and about 40 comments, we were finally able to get the issue triaged 😅.</p>
 <p><img

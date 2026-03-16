@@ -24,11 +24,11 @@ We started looking for references to see if the client apps use the autoconfigur
 
 ![breakpoint](breakpoint.png "")
 
-And, surely so, we saw a request being made to it.
+And, sure enough, we saw a request being made to it.
 
 ![fetch](fetch.png "")
 
-And the callstack lead to `onAuthCallback` confirming that it is being utilized for exchanging the code.
+And the callstack led to `onAuthCallback` confirming that it is being utilized for exchanging the code.
 
 ![callstack](callstack.png "")
 
@@ -125,6 +125,12 @@ However, Firefox users got a prompt asking them to confirm if they wanted to nav
 ![firefox prompt](firefox_prompt.png "firefox prompt")
 
 Luckily, it did not raise a panic, and we were good to go.
+
+### TL;DR
+
+To summarize the attack flow looked like the following:
+
+![attack flow](diagram.svg "attack flow")
 
 
 ### Reporting and results
